@@ -1,0 +1,185 @@
+<html>
+	<subtitle>Mining, constructing</subtitle>
+<body>
+
+<p>From the <a href="/en/about/guide/">previous part</a> of this guide we know how to choose
+a race and a planet. Now when the planet is chosen we will learn to survive in the game universe.</p>
+<p>We open “Planet” tab and see something like this:</p>
+
+<img src="/static/manual/play1_en.gif" alt="" width="501" height="390" vspace="30" hspace="10" border="0"/>
+<p>First thing to note is marked with green you resources fund. To build something in the game
+you will have to have resources, and here you can see how much resources you have. Our
+“Vorlon” race utilizes organics and minerals for industry purposes, so that resources
+are shown. Energy is completely eaten by vorlonians during breakfasts and lunches and
+could not be collected at all. Humans will eat organics and have minerals and
+energy as a resources. Last indicators shows the money you have.</p>
+
+<table>
+<tr>
+	<td><img src="/static/manual/play2.gif" alt="" width="382" height="28" vspace="30" hspace="10" border="0"/></td>
+	<td>“Vorlon” resources</td>
+</tr>
+<tr>
+	<td><img src="/static/manual/play3.gif" alt="" width="382" height="28" vspace="30" hspace="10" border="0"/></td>
+	<td>“Humans” resources</td>
+</tr>
+</table>
+<p>For every resource you can see how much is currently available, how much was produced and spent during
+the last turn. We have not survived a single turn yet so there are zeroes. This numbers will
+show you how much was <strong>really</strong> produced and spend, with respect to all roundings made.</p>
+<p>Now we will look at marked with yellow buildings list. It shows us all the buildings we already
+have on the planet and what buildings we can already create. All units are created here as well, not only
+buildings. Every existing building has a short description and support costs (marked with red).</p>
+<img src="/static/manual/play4_en.gif" alt="" width="318" height="336" vspace="30" hspace="10" border="0"/>
+<p>Note the already known for us resource color/letter notation <span style="color: lime;">O</span> (Organics),
+<span style="color:#00ffff;">E</span> (Energy), <span style="color: Red;">M</span> (Minerals).</p>
+<p>We can see that our shipyard consumes seven points of organics and four of minerals. All theis numbers are rounded and after the turn calculations you may get slightly
+different numbers on the top of the screen.</p>
+<p>Every mining building has it's mining capabilities described (green marker on the picture).</p>
+<p>Blue marker shows we can easily destroy anything we have built. To save money on support, for example.</p>
+<p>Now let us scroll down to see available buildings list.</p>
+
+<table>
+<tr>
+	<td>“Vorlon”</td>
+	<td>“Humans”</td>
+</tr>
+<tr>
+	<td><img src="/static/manual/play7_en.gif" alt="" width="318" height="336" vspace="30" hspace="10" border="0"/></td>
+	<td><img src="/static/manual/play6_en.gif" alt="" width="318" height="336" vspace="30" hspace="10" border="0"/></td>
+</tr>
+</table>
+<p>Note the different prices for different races.</p>
+<p>We again see well-known resources, but we also see two new notations.
+<span style="color: yellow;">C</span> (Credits) is quite transparent.
+<span style="color:#ff00ff;">P</span> (People) shows amount of people
+a building will employ. To create a building you must have enough free people
+on the planet. This means you can not endlessly build, say, mines on the planet - 
+once all peoples are busy, no people-requiring buildings can be created on it.</p>
+<p>Purple mark brings our attention to the difference in creation time for civil and military buildings.
+While shuttle takes the same six turns to complete, colony creation will be noticeably longer for humans.</p>
+
+<p>“[build]” link's purpose is clear, so we go ahead and start constructing biofarm.</p>
+<img src="/static/manual/play5_en.gif" alt="" width="318" height="336" vspace="30" hspace="10" border="0"/>
+<p>Now in the building queue we see our in-progress-farm and our resources at the top
+of the page had decreased.</p>
+<p>If we will “[cancel]” our biofarm all resources will be returned to us. If we cancel our
+farm later all resources will be restored as well and moreover, all the job progress will be
+transferred to the next building in the queue, if any. This means canceling production is a
+completely safe and free action. Unlike action “disband”, which will return you <strong>nothing</strong>.</p>
+<p>You can fill queue as long as you have enough resources to order something. As soon
+as the planet will finish one building, it will start constructing the next one. The only
+limitation is the number of completed buildings per turn - <strong>one</strong>.</p>
+<p>Production speed depends on the planet population, race bonuses, building type (civil/military) and
+can be increased with buildings like “Factory”.</p>
+
+<br/>
+<p>Well, spending money is more or less clear. Now it is time to understand where do our
+money come from. The window inside the red marker is the one we need.</p>
+<img src="/static/manual/play8_en.gif" alt="" width="318" height="336" vspace="30" hspace="10" border="0"/>
+<p>Green line marks planet properties. Being familiar with the game notations you must recognize
+the meaning of this graph, but we will explain it one more time. Left to right there are:
+Organics concentration, Energy concentration, Minerals concentration, surface Temperature,
+planet Surface. Every parameter may vary between 1 and 99.</p>
+<p>For the “Average” race (all base properties are 50, no bonuses) with organics nature and mineral
+industry the planet of the size 50 with the perfect temperature and 50 of every resource, 50&#160;000
+population anв no mining buildings will do like this:</p>
+
+<br/>
+<table border="1" cellpadding="3" cellspacing="0">
+<tr>
+	<th>Parameter</th>
+	<th>Formulation</th>
+	<th>Result</th>
+</tr>
+<tr>
+	<td>Main resource</td>
+	<td>50000<span class="p">P</span>*50<span class="m">М</span>/<span style="color: #CECA6F;">160000</span></td>
+	<td align="right">15<span class="m">М</span></td>
+</tr>
+<tr>
+	<td>Secondary resource</td>
+	<td>50000<span class="p">P</span>*50<span class="e">E</span>/<span style="color: #CECA6F;">160000</span>/2</td>
+	<td align="right">7<span class="e">E</span></td>
+</tr>
+<tr>
+	<td>Money</td>
+	<td><nobr>50000<span class="p">P</span>/<span style="color: #CECA6F;">25000</span> + (15<span class="m">М</span>+7<span class="e">E</span>)/<span style="color: #CECA6F;">5</span></nobr></td>
+	<td align="right">6<span class="c">C</span></td>
+</tr>
+<tr>
+	<td>Science</td>
+	<td>6<span class="c">C</span>*<span style="color: #CECA6F;">1</span></td>
+	<td align="right">6</td>
+</tr>
+<tr>
+	<td>Population growth</td>
+	<td>50<span class="o">O</span>*<span style="color: #CECA6F;">0,05</span></td>
+	<td align="right">2%</td>
+</tr>
+<tr>
+	<td>Ьan-hourы per turn</td>
+	<td>50000<span class="p">P</span>*<span style="color: #CECA6F;">0,01</span></td>
+	<td align="right">500</td>
+</tr>
+<tr>
+	<td>Population limit</td>
+	<td>50<span class="s">S</span>*<span style="color: #CECA6F;">2000</span></td>
+	<td align="right">100000<span class="p">P</span></td>
+</tr>
+<tr>
+	<td colspan="3"><small><span style="color: #CECA6F;">Gold</span> color marks constants which are a subject
+	to change. In money calculation (15<span class="m">М</span>+7<span class="e">E</span>) means a summ of
+	main and secondary resources production.</small></td>
+</tr>
+</table>
+<br/>
+<p>A race with 20% mining bonus will get<br/>
+<code>50000<span class="p">P</span>*50<span class="m">М</span>/<span style="color: #CECA6F;">160000</span>*1.2=18<span class="m">М</span></code>
+<br/>of the main resouce. Having population of 80&#160;000 on the same planet that race will have
+<code>80000<span class="p">P</span>*50<span class="m">М</span>/<span style="color: #CECA6F;">160000</span>*1.2=28<span class="m">М</span></code>,<br/>
+and adding two mines to this we will see<br/>
+<code>80000<span class="p">P</span>*50<span class="m">М</span>/<span style="color: #CECA6F;">160000</span>*1.2*1.4=40<span class="m">М</span></code>.</p>
+<p>As long as money depend on resources, money will grow as well.</p>
+<p>Surface column (S) may confuse us - it us definitely split by two. The meaning of this is simple:
+blue shows us overall surface, while crimson shows us the currently occupied part of the planet (95% in this case).</p>
+<p>Now let us look at the table marked with yellow. This is information about our population too,
+but from another point. Here we can see absolute population size, number of unemployed people and
+the speed of the population growth.</p>
+<p>Population growth speed depends on race bonuses, resource concentration (for vorlonians
+energy concentration will affect population growth) and percent of the unused
+surface. As soon as your population reaches 50% of the maximum possible,
+population growth speed will slowly degrade and population will stabilize.</p>
+<p>Building an energy generator we will increase vorlonian population growth speed by 20%.
+For humans we would build biofarm for the same purpose.</p>
+
+<p>Now let us try to land humans on the same planet.</p>
+<table>
+<tr>
+	<td>“Vorlon”</td>
+	<td>“Humans”</td>
+</tr>
+<tr>
+	<td><img src="/static/manual/play8_en.gif" alt="" width="318" height="336" vspace="30" hspace="10" border="0"/></td>
+	<td><img src="/static/manual/play9_en.gif" alt="" width="318" height="336" vspace="30" hspace="10" border="0"/></td>
+</tr>
+</table>
+<p>Humans will slowly die out here, at the first place. The reason is surface temperature  - humans can
+not leave on a planet with 52°.</p>
+<p>Another important point - mining speed. Humans are good in mining. Vorlonians are good in fighting.</p>
+<p>There is another, hard to detect, difference - humans occupy only 58% (vs 59% for Vorlon), they use surface slightly better.</p>
+<p>Now let us once again take a look at the resources (red marker) and repeat what we know already.
+The more resource concentration, the more we will mine. The bigger is population - the faster we will mine.
+The more mining buildings we have on a planet, the faster the mining will be.</p>
+<p>Money depend on resources and population.</p>
+<p>Before this part will end, we will take a short look at the orange mark at the
+first picture on this page. This mark surrounds events window. Every event in the game, like
+building finished or alien fleet arrival will create an event in this window. Now this window contains
+greeting, and this greeting, among the other things, contain an advise to create a fleet and
+make our first hyperspace jump. <a href="/en/about/guide_iii/">Next part</a> will
+tesch us to fly and explore.</p>
+
+<br/>
+<p><a href="/en/about/guide_iii/">Go to the next part &gt;&gt;</a></p>
+</body>
+</html>

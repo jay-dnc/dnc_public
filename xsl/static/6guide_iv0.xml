@@ -1,0 +1,135 @@
+<html>
+	<subtitle>Exploring, spying</subtitle>
+<body>
+<p>In the <a href="/en/about/guide_iii/">previous part</a> of the guide we have send our not-too-fast vorlonian fleet
+to nearest to us giant planet.</p>
+<p>Four turns had gone, on our homeworld biofarm was completed and we have ordered another one.
+Population changed from 70&#160;000	to 74&#160;216.</p>
+<p>And our “Scout” had reached it's target. We open
+“Planet”, click on 548:546 and examine the screen.</p>
+
+<img src="/static/manual/research1_en.gif" alt="" width="318" height="336" vspace="30" hspace="10" border="0"/>
+<p>As was promised, white dot had grown to white dash and green arrow points to that dash.</p>
+<p>Red arrow points to planet's occupation state. In fact there are two red arrows and they both point
+to occupation markers. Markers are clearly different - our home world’s one
+is white (our world) and is filled (world is occupied). Unfilled triangle
+marks a free world and is always gray.</p>
+<p>Below you can find all possible occupation icons.</p>
+
+<table border="0" cellpadding="3" cellspacing="0">
+<tr>
+	<td colspan="2"><img src="http://info.the-game.ru/img/ico_dip_self.gif" width="11" height="11" alt="" border="0"/></td>
+	<td>Your planet</td>
+</tr>
+<tr>
+	<td><img src="http://info.the-game.ru/img/ico_dip_l.gif" width="11" height="11" alt="" border="0"/></td>
+	<td><img src="http://info.the-game.ru/img/ico_dip_fl.gif" width="11" height="11" alt="" border="0"/></td>
+	<td>Unoccupied planet</td>
+</tr>
+<tr>
+	<td><img src="http://info.the-game.ru/img/ico_dip_00l.gif" width="11" height="11" alt="" border="0"/></td>
+	<td><img src="http://info.the-game.ru/img/ico_dip_00fl.gif" width="11" height="11" alt="" border="0"/></td>
+	<td>Occupied, no diplomatic relation set</td>
+</tr>
+<tr>
+	<td><img src="http://info.the-game.ru/img/ico_dip_0l.gif" width="11" height="11" alt="" border="0"/></td>
+	<td><img src="http://info.the-game.ru/img/ico_dip_0fl.gif" width="11" height="11" alt="" border="0"/></td>
+	<td>Your enemy's world</td>
+</tr>
+<tr>
+	<td><img src="http://info.the-game.ru/img/ico_dip_1l.gif" width="11" height="11" alt="" border="0"/></td>
+	<td><img src="http://info.the-game.ru/img/ico_dip_1fl.gif" width="11" height="11" alt="" border="0"/></td>
+	<td>Neytral</td>
+</tr>
+<tr>
+	<td><img src="http://info.the-game.ru/img/ico_dip_2l.gif" width="11" height="11" alt="" border="0"/></td>
+	<td><img src="http://info.the-game.ru/img/ico_dip_2fl.gif" width="11" height="11" alt="" border="0"/></td>
+	<td>Ally</td>
+</tr>
+<tr>
+	<td><img src="http://info.the-game.ru/img/ico_dip_3l.gif" width="11" height="11" alt="" border="0"/></td>
+	<td><img src="http://info.the-game.ru/img/ico_dip_3fl.gif" width="11" height="11" alt="" border="0"/></td>
+	<td>Vassal</td>
+</tr>
+<tr>
+	<td><img src="http://info.the-game.ru/img/ico_dip_4l.gif" width="11" height="11" alt="" border="0"/></td>
+	<td><img src="http://info.the-game.ru/img/ico_dip_4fl.gif" width="11" height="11" alt="" border="0"/></td>
+	<td>Lord</td>
+</tr>
+</table>
+<p>Marker may have or may have not a gray grid. This greed marks the worlds with posibbly outdated
+state. Our Probe is here, so no grid present, but as soon as our probe leaves this world,
+the outdated state will be set.</p>
+<p><strong>Any fleet</strong> can see occupation state, no probe required. But we are here
+with another mission - we want to know weather our vorlonians will leave here or die.</p>
+<p>Next to our planet we can see a graph (blue arrow) while this planet has no such graph. That
+what our probe will do - plot a graph and put it on our map.</p>
+<p>We go back to “Space fleets” window, expand our “Scout” fleet and look at our probe.</p>
+
+<img src="/static/manual/research2_en.gif" alt="" width="318" height="336" vspace="30" hspace="10" border="0"/>
+<p>Here it is. Research will take one turn to complete and will cost us 98 credits. We click
+“[Explore]” and wait a turn to end.</p>
+<p>...single turn calculated...</p>
+<p>Let us return to our scientists and see what they have done. They have done well.
+We now have full information on this world (aqua arrow).</p>
+<img src="/static/manual/research3.gif" alt="" width="286" height="286" vspace="30" hspace="10" border="0"/>
+<p>One more thing we have is information what will happen with vorlonian on this planet.
+Green arrow points to a red line, crossing our hope to colonize this world. If this line would
+be pink, this would mean we could survive here. Yellow or orange line means we could leave here fine. 
+Green line would mean a perfect conditions for our race. Red means our race will dye out here.</p>
+<p>But there is something more our probe had found, There is an alien fleet approaching the planet.</p>
+<p>Red arrow targets red dot. This is an alien fleet. We can not say who is fleet's owner
+until it in the hyperspace, so all such fleets are marked red on the map.</p>
+<p>Well, we know something is approaching. What else do we know? Let us look at
+“Planet news” window.</p>
+<img src="/static/manual/research4_en.gif" alt="" width="318" height="336" vspace="30" hspace="10" border="0"/>
+<p>Now we know from where the fleet is flying. We know jumpships number. And we
+know the weight of the fleet. The only jumpship with such weight is a probe.
+The planet a probe started from has suspiciously average size, which could mean
+it is someone's homeworld.</p>
+<p>Now we have to decide what to do next. We can fly away now. This will save us
+time and we will definitely not disclose our existence. That was pro. Contra is
+we will not get any more information.</p>
+<p>Another way is to turn stealth on and wait for our neighbor to arrive. This will
+let us to know who is the neighbor and where he will fly next. Keeping in mind he can not
+fly to an empty world, we could discover one more alien planet.</p>
+<p>If we know our neighbor's name, we will be able to know his race, how long he is in the game,
+what his game rating is, how many planets he has. Suppose his probe will leave to 550:543 instead of returning
+to 549:544. If we would know he has two planets - we have his portrait in our pocket without even
+being seeing.</p>
+<p>The problem could arise if the neighbor has advanced detection capabilities and will
+detect our hidden unit.</p>
+<p>This is a guide, so I have to stay for any way. In the game you will decide for your self.</p>
+<br/>
+<p>One more thing to note is “Space fleets” window. There is our fleet and there is the allien fleet as well.</p>
+<img src="/static/manual/research5_en.gif" alt="" width="318" height="336" vspace="30" hspace="10" border="0"/>
+<p>This notation looks similar to the one we have seeing in our Harrison, but this numbers
+have completely different meaning. This is not “Three jumpships, one carrier-based, one transportable”,
+but it is “Three turns, one jumpship, one ton”. This is only a probe.</p>
+<br/>
+<p>To save 12 credits we will only turn stealth on when the aliens arrive.</p>
+
+<p>...two turns calculated...</p>
+<p>We turn stealth on</p>
+<p>...single turn calculated...</p>
+<p>That's it! We can see him now, he (hopefully) can not see us.</p>
+
+<img src="/static/manual/research6_en.gif" alt="" width="318" height="336" vspace="30" hspace="10" border="0"/>
+<p>This is human, and our warriors are definitely superior to humans. This fleet is called
+“Researcher”, which is not too informative since we already know it is a probe. Notation changed again
+(no turns till arrival now). Name of our neighbor is known to us as well, he has two planets
+already. Let us wait a bit and see where he will fly next.</p>
+
+<p>...two turns calculated...</p>
+<p>Let us see.</p>
+<img src="/static/manual/research7_en.gif" alt="" width="318" height="336" vspace="30" hspace="10" border="0"/>
+<p>For any way that was cool. We know about his possible homeworld. Probably “Vorlon” race will
+have a hard time searching for a world to land. But shake humans to get some resources should be an easy
+task. Time to get profit from our race's strengths.</p>
+
+<p>In the <a href="/en/about/guide_v/">next part</a> of this guide we will create an army and visit
+our neighbor.</p>
+
+<p><a href="/en/about/guide_v/">Go to the next part &gt;&gt;</a></p>
+</body>
+</html>

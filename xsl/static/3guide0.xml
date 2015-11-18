@@ -1,0 +1,106 @@
+<html>
+	<overtitle>Quick start</overtitle>
+	<subtitle>Choosing a race</subtitle>
+<body>
+<p>So, you are starting your game. Let's assume you can select a user name and a password without
+reading a manual, but
+now you have to choose a race. Here is a place a manual could be handy.</p>
+
+<img src="/static/manual/racechoose1_en.gif" alt="" width="314" height="272" vspace="30" hspace="10" border="0"/>
+<p>We will start from a predefined race. Later we will use it as it is or rebuild it to meet our
+requirements.</p>
+<p>Let us start with “Humans”, the most famous race on the Earth.</p>
+<img src="/static/manual/racechoose2_en.gif" alt="" width="361" height="792" vspace="30" hspace="10" border="0"/>
+<p>Well, what have we got here? We have a lime mark near the base race properties – race nature and
+production nature. Human's nature is organic, everybody knows that already. To survive
+human consumes proteins and carbohydrates.</p>
+<p>But what else should we know? We should know that on the planet with lots of organics humans
+multiply faster. Population growth speed can reach 4% or more on a planet
+rich with organics. The planet without organics, thou, will have zero population growth speed.</p>
+<p>Population will be your most valuable resource. The more you population is, the more
+resources they gather and the more money they will produce. And buildings/units production speed
+depends on the population size as well.</p>
+<p>Human's industry is based on minerals, like iron ore, oil, coal and the like. That's not a sensation again.
+To support the industry humans mine and then spend minerals to produce buildings, spaceships and
+other funny stuff. The more minerals on the planet are, the more humans will mine and the more units they
+will be able to produce and/or support. Planet with minerals but without organics, unfortunately,
+is forbidden for humans – they will not be able to multiply enough to actually mine something useful.</p>
+
+<p>In fact, there are <strong>three</strong> resources in the game – <span class="m">M</span>inerals, <span class="o">O</span>rganics and <span class="e">E</span>nergy.
+We know about all, but energy. Do humans use energy?</p>
+<p>Of course they do. Not that they do it right, but they are trying hard. As the result, they
+do mine energy, but exactly half as good as they mine minerals with other things being equal. This means
+humans will have to take care about the energy too, while they will not use it much.</p>
+
+<p>Ok, now we know some worlds are unusable for humans because of the low organics concentration and
+some are unusable because of the lack of the minerals and the energy. What
+good news are still waiting for us?</p>
+<p>Marked with red graph on the screenshot above is still waiting. This graph describes weather our colonists will
+live or die on the planet depending on it's temperature.</p>
+<p>As we can see, our human colonists are fine while surface temperature is somewhat between
+5 and 35 degrees centigrade. The more we deviate from that range the worse our colonists
+survive and on the planets with surface temperature above 50° our colonists will start
+do die out, no matter how many organics they can find around.</p>
+<p>In D&amp;C universe planets can have temperature in 0°-99° range, so humans are reasonably comfortable
+on every third planet. Not bad at all, by the way.</p>
+<p>Next goes marked with blue base race parameters. This is what you can change when you create your
+custom race. Below you can find marked with orange derivative race stats. This race
+properties are calculated using a dedicated formula from the base parameters.</p>
+<p>This therewith means you can not simply, say, make you ships fly far and fast. Instead you will
+have to make you race nomads and get in addition to good fly speed slow
+civil production, altered mining rate and other, not always desired, shifts.</p>
+
+<p>Let us suppose we are not satisfied with Humans race. Retarded scientists,
+decrepit units and other unpleasant things make us press “Customize race...” button.
+We will make our ships fast and our peoples strong.</p>
+<p>What we see in the next window looks mostly common for us. But the bottom of the page is different,
+here we can see our race constructor window.</p>
+
+<img src="/static/manual/racechoose3_en.gif" alt="" width="273" height="458" vspace="30" hspace="10" border="0"/>
+<p>Now we have all the controls in our hands and can really create something cool. You can change your race
+nature and industry nature. You can set comfortable temperature for your race. You can manipulate
+with base race parameters. I am going to produce “Vorlon” race. Those who have seeing “Babylon 5” series must remember
+it was an ancient and powerful, but dying out race of something we can assume to be energy nature.</p>
+<p>Let's start constructing. Race nature – energy, production nature – organics (they’ve taught
+some other race to grow alive ships or something like that, if memory serves me well). This is an ancient
+race of bores. Something like this, I believe:</p>
+
+<img src="/static/manual/racechoose4_en.gif" alt="" width="273" height="458" vspace="30" hspace="10" border="0"/>
+<p>Click “Update” and see the result:</p>
+<img src="/static/manual/racechoose5_en.gif" alt="" width="361" height="762" vspace="30" hspace="10" border="0"/>
+<p>Not that this race is bad or is completely unlike it's prototype, but it is definitely not as
+powerful as the prototype was in the series. We will have to take it the way it is – game does not allow
+us to get something for free.</p>
+<p>All right, we like our Vorlonians for any way and we press “Take this race”. Now we see a list of
+the available homeworlds.</p>
+<img src="/static/manual/racechoose6_en.gif" alt="" width="314" height="231" vspace="30" hspace="10" border="0"/>
+<p>Now we have to decide where will be our homeworld. We could start from the universe center, find there
+a powerful patron and grow in a peaceful environment. In other hand we can find ourselves at a border world,
+fighting with both (or more) sides.</p>
+<p>Alternatively we can land far from the center and try our luck in making our own empire
+from the scratch. Or in surviving endless conflicts with
+neighbors.</p>
+<p>Or we can just ignore all this matters and choose the best planet game offers. In fact it is
+not really a perfect idea as well because good planets nearby are much more important for any way, but
+we must start somewhere, after all.</p>
+
+<p>Planet notation in the list is quite simple and you should read it like this:<br/>
+X:Y; Temperature: ##, Surface: ##, Organics: ##, Energy: ##, Minerals: ##.</p>
+<p>First go planet coordinates, than planet conditions. then resources, marked as
+O (Organics), E (Energy), M (Minerals). This notation, as well as the color notation
+<span class="o">O</span>,
+<span class="e">E</span>, <span class="m">M</span>, is used in the game everywhere, so you should
+remember and recognize it.</p>
+<p>Now let's check what is offered to us:</p>
+
+<img src="/static/manual/racechoose7_en.gif" alt="" width="314" height="468" vspace="30" hspace="10" border="0"/>
+<p>Most attractable planets are marked, and the best planet is definitely 549:547. It is large – it will
+fit large population to produce lots of resources and build units faster. It has high concentration
+of organics. With minerals things are not so fine, bit this planet seems to be the best out there.</p>
+<p>We choose 549:547 and press “Ok”.</p>
+<p>Alea jacta est. <a href="/en/about/guide_ii/">Next part</a> of this guide will teach us to
+construct buildings, mine resources and plan our expansion.</p>
+<br/>
+<p><a href="/en/about/guide_ii/">Go to the next part &gt;&gt;</a></p>
+</body>
+</html>

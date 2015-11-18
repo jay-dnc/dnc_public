@@ -1,0 +1,45 @@
+.red {
+  color: #f43335;
+}
+.green {
+  color: #708441;
+}
+.blue {
+  color: #1f80c9;
+}
+.orange-text {
+  color: #ffae00;
+}
+.italic {
+  font-style: italic;
+}
+.bold {
+  font-weight: bold;
+}
+.normal-fw {
+  font-weight: normal;
+}
+.bottom {
+  margin-bottom: 30px;
+}
+.bg_color_l-blue {
+  background-color: #dcf2f9;
+}
+.min_width {
+  min-width: 1000px;
+}
+.a_block {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.inline-block {
+  display: -moz-inline-stack;
+  display: inline-block;
+  vertical-align: top;
+  zoom: 1;
+  *display: inline;
+}
+input:-webkit-autofill {
+  background: #fff;
+}

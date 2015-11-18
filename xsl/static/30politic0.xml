@@ -1,0 +1,57 @@
+<html>
+	<title>Politics</title>
+<body>
+<!--<p><em>Sun Tzu said:  The art of war is of vital importance to the State.</em></p>
+
+<p><em>It is a matter of life and death, a road either to safety or to ruin.  Hence it is a subject of inquiry
+    which can on no account be neglected.
+</em><br/>
+(Sun Tzu, Art of War)</p>
+<br/>-->
+<h2>Overview</h2>
+<p>Though playing D&amp;C you will make war, care of economics and trade, this game is not about
+battles nor trading.</p>
+<p>Though you will enter into alliances, obey your lord and care about your vassals,
+this game is not about cooperation.</p>
+<p>Though you can play on your own and fight for independence, this game is not about
+lones.</p>
+<p>Though you can be a noble Samurai and die for your overlord, know this:
+this game is not about loyalty.</p>
+
+<p>This game is about victors, who need never explain. It is about
+the slavery and the sway, which are one step away. This game is about the
+power, you can not share but can lose. About the power you will never
+get enough.</p>
+<p>You can play D&amp;C the way you like. You can be a noble knight,
+unscrupulous mercenary or a peaceful peasant. But this universe
+is driven by the victorious. And the way to the victory is not a rosy one.</p>
+
+<p><em>All warfare is based on deception.</em> (Sun Tzu, Art of War)</p>
+<h2>Details</h2>
+<p>Diplomacy in D&amp;C is quite similar to what you can find in any strategy game.
+You can mark any player as you ally or as you enemy on your choice, and he will
+never get to know about your choice.</p>
+<br/>
+<p>Yet.</p>
+<br/>
+<p>Lord-vassal relation change this scheme a bit. First of all, to  establish
+such relation future lord must have at least two governors and bring a governor to the future vassal's
+homeworld.
+Governor then can send a proposal to became a vassal. Player can agree, disagree or
+simply ignore the request.</p>
+<p>If one agrees to became a vassal, lord-vassal relations are established
+immediately. Negative answer is sent to the frustrated lord instantly as well.</p>
+<p>More than that, breaking lord-vassal relations is two-side action. You will
+be notified about the rebellion right after the moment it starts.</p>
+<p>Maximum number of vassals is calculated like (number_of_lords - 1)*3.</p>
+<h2>Why to mess with all this vassal thing?</h2>
+<p>Vassal will get lord's native technology level. Native means the level the lord would
+have <strong>without</strong> any vassals. This means being a vassal of the player with similar to you
+technology level will make you no profit.</p>
+<p>Lord gets resources and money. And moreover, his technology level grows. Any single credit
+a lord receives from his vassal will make few times more science points than his own credit.</p>
+<p>Another reason to create a vassal relation is to concentrate and grow power. Fighting with
+a strong enemy is easier when you have a leader with advanced technology and lots of resources
+to create and support a huge army. This could lead to abuse of power though.</p>
+</body>
+</html>

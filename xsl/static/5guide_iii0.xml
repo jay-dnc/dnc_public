@@ -1,0 +1,97 @@
+<html>
+	<subtitle>First hyperspace jump</subtitle>
+<body>
+<p>In the <a href="/en/about/guide_ii/">previous part</a> of this guide we have reviewed our homeworld
+and ordered a new building (Biofarm). Now then we have a general knowlege of our home it is time
+to explore the world around.</p>
+<p>We open thep “Planet” tab again, but now we will work with other parts of the game interface.</p>
+<img src="/static/manual/fly1_en.gif" alt="" width="500" height="387" vspace="30" hspace="10" border="0"/>
+<p>Green marker brings our attention to the celestial map.</p>
+<p>Planet in the center of the map is marked with white square, this is an active planet. Active
+planet is always in the center of the map, and now it is our homeworld.</p>
+<p>All around our homeworld we can see colored bolls pretending to be planets. Be warned:
+<strong>planet color means nothing</strong>.</p>
+<p><strong>Planet size is important</strong> - it allows you to approximate planet's surface size. As
+you must remember from the previous part of this guide, population size affects production and mining speed
+and thus is very important. Larger planet can hold a larger population.</p>
+<p>Except for the approximate size of the planets nearby, our map contains no information so far. Time
+to start exploring the area.</p>
+<img src="/static/manual/fly2_en.gif" alt="" width="318" height="336" vspace="30" hspace="10" border="0"/>
+<p>Important objects are marked with green. Most probably there are very few planets around our vorlonians cal leave on,
+and finding a suitable large planet is an unlikely event, but we have to start somewhere, let's explore
+large planets first.</p>
+<p>Distances are very important in the game too. Flying over three cells can take as long as 20 turns
+for some races and thus we should take a great care about the nearest planets first.</p>
+<p>Another thing to keep in mind while starting exploration is a chance to find an alien planet,
+being tracked and attacked. Yet we will not care of it for now.</p>
+<p>So the first planet in our to-do list is a dark giant 548:546. Now let us take a closer look at our
+scouting force. It is located in the “Space fleets” window, marked with red on the first picture.
+There is a yellow color as well, it marks “Planet's Harrison” text. And there also is an extraordinary
+important button of “Create a fleet” (blue arrow). Now we click “Planet's Harrison” text and see this:</p>
+<img src="/static/manual/fly3_en.gif" alt="" width="318" height="336" vspace="30" hspace="10" border="0"/>
+<p>Let us make an inspection of our Harrison.</p>
+<p>Yellow marker shows us a quick info on our Harrison. There is
+jumpships number, carrier-based units number, transportable items number. We do not seem to have any carrier-based units
+so far.</p>
+<p>What we do have is a probe (green mark). Quite a fast but hopelessly peaceful unit. This unit
+(and only this unit) can explore a planet surface and tell us, what is the exact planet size, how many resources the planet
+contains and how hot the planet's surface is.</p>
+<p>Another usable thing about the probe is it's stealth engines.
+Probe's engines are relatively weak and turning stealth on
+takes money, but still. Perhaps, we already have an alien probe on our orbit tracking us down.</p>
+<p>We have a shuttle as well, and reviewing it's description we can assume it is can do some transporting
+as well as some fighting. Bringing a colony to the target planet will be a nice task for this peace
+of metal.</p>
+<p>And we do have two infantry units. Those brave kids with lasers in hand are the ones to
+stop anyone trying to invade our home. Hopefully. Yet our vorlonians infantry is way stronger
+than, say, humans infantry. Really stronger.</p>
+<p>Well, the war is clearly an easy deal for us, let's get back to exploring. We are going to send a probe
+to 548:546 system.</p>
+
+<p>All hyperspace jumps in the game are made by <strong>fleets</strong>. You can not take a shuttle and
+order it to fly and fight somewhere. No. First you create a fleet, then put your shuttle into it and
+<strong>then</strong> order the whole thing to fly. Maybe you should add an infantry to the fleet before flying. Or a couple of more shuttles with infantry aboard. For any way, you will give an order to the
+whole formation.</p>
+<p>Note, that you can not bring, say, infantry to the fleet without transports. Infantry is unable to
+survive on the orbit, no matter are they in a fleet or not.</p>
+<img src="/static/manual/fly4_en.gif" alt="" width="318" height="336" vspace="30" hspace="10" border="0"/>
+<p>For our exploration task one-probe fleet will be fine, so we create a fleet of “Scout” and open our
+harrison again. Near to the units we can put in our fleet we see “Transfer to” drop-down.</p>
+<img src="/static/manual/fly5_en.gif" alt="" width="318" height="336" vspace="30" hspace="10" border="0"/>
+<p>Note once again - we are unable to move infantry.</p>
+<p>Now we transfer our probe to the new fleet. We open drop-down list and choose our “Scout” fleet as
+a target. Numbers in Harrison and fleet headers change.</p>
+<img src="/static/manual/fly6_en.gif" alt="" width="318" height="336" vspace="30" hspace="10" border="0"/>
+<p>There is a yellow-marked button “Make a fly to” and some information about our fleet.</p>
+<p>Marked with aqua numbers in header mean: jumpship number, number of carrier-based units/number of carrier slots,
+number of transportable items/number of transport pods. We have a single jumpship without any kind of
+pods, it's a small probe. Note the number of jumpships in Harrison header - is now 1.</p>
+<p>Red mark surrounds our fleet's jump engines quality. Our vorlonaans are not fast at all, we have
+to admit. Speed is 0.4, maximum distance is 4.01.</p>
+<p>Green color - stealth engines. Stealth engine quality is 1.6, it is not too good as well,
+in fact. Moreover turning stealth on will require 61 credit plus 6 credits per turn.
+I suppose it is too early to invest so much, let's preserve our money for a while.</p>
+<p>There is marked with blue item “Change fleet behavior”, but we will deal with it later.
+Unnecessary to give battle orders to our hopelessly peaceful fleet. Instead we press
+“Make a fly to...” button and type in target coordinates 548:546. The colon we could replace with
+dot or comma. We press Ok and our fleet disappears from the planet. Instead we see
+a small white dot on the celestial map. We click on the 548:546 to activate the planet.</p>
+
+<img src="/static/manual/fly7_en.gif" alt="" width="318" height="336" vspace="30" hspace="10" border="0"/>
+<p>This huge green arrow shows a little dot on the map - our flying fleet representation. As soon as
+our fleet will arrive, the dot will grow.</p>
+<p>Let us check “Space fleets” window now. Disappeared from our homeworld fleet is now here. It's name
+is grayed to show the fact the fleet is still in transit.</p>
+<img src="/static/manual/fly8_en.gif" alt="" width="318" height="336" vspace="30" hspace="10" border="0"/>
+<p>All the information about the fleet we can see now is remaining traveling time (green). And we can still
+cancel a jump. When the turn will be calculated our fleet will enter hyperspace and we will be unable
+to communicate with it at all, but now we still have full control over it.</p>
+<p>Our first space journey will soon start and will last for four turns. Some races can
+cross the same distance in two turns, but vorlon is slow, yes.</p>
+
+<p>In the <a href="/en/about/guide_iv/">next part</a> we will explore the planets nearby,
+meet with aliens and will try to establish our first colony.</p>
+
+<p><a href="/en/about/guide_iv/">Go to the next part &gt;&gt;</a></p>
+</body>
+</html>

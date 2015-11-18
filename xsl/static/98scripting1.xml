@@ -1,0 +1,595 @@
+<html>
+	<title>Скрипты</title>
+<body>
+<h2>Общая информация</h2>
+<h2>Обратите внимание: Скриптование как таковое и данный раздел справки находятся в
+	активной работе. Не все, написанное здесь уже работает в игре и не все, работающее в игре, описано здесь.</h2>
+<p>В D&amp;C есть возможность автоматизировать свою империю. Вы можете отлучиться на неделю,
+можете быть слишком заняты какое-то время, но это не значит, что ваши подданные должны страдать!
+Управляйте будущим наравне с настоящим и будьте там, где вас нет. Эта возможность
+доступна только для платных учетных записей, причем продвинутые возможности
+даются отдельно, обычная подписка позволяет автоматизировать далеко не все.</p>
+<p>Автоматизация осуществляется путем назначения флотам скриптов. В качестве языка скриптования
+используется <strong>perl</strong> с отключенным доступом к ресурсам системы (модуль Safe).</p>
+<p>После просчета хода все флоты платных игроков просматриваются в поиске активных скриптов.
+Если найден разрешенный скрипт, он выполняется. Вы можете задать порядок выполнения скриптов
+назначая им "вес", наиболее "тяжелые" скрипты будут выполнены последними – 1, 2, 3, 4...</p>
+<p>Каждому флоту вы можете назначить один скрипт.</p>
+<p>Доступ к игровой вселенной ваши скрипты получают через объект <strong>$Empire</strong>, ниже приводится описание
+этого и других объектов, посредством которых вы сможете влиять на жизнь вашей империи.</p>
+<p>Разумеется, все методы в скриптах дают ровно тот же эффект, что и манипуляции
+с веб-интерфейсом, то есть вы не сможете включить скрытность при недостатке наличности а
+флот реально тронется в путь не в тот момент, когда выполнится скрипт, а при перерасчете следующего хода,
+а до того момента вы сможете отменить прыжок.</p>
+<h2><a name="Empire"/>Empire</h2>
+<pre><span style="color:#88f;font-weight:bold;">my</span> <span style="color:#fee;"><b>$</b>Fleet</span> <span style="color:#fff;">=</span> <span style="color:#fee;"><b>$</b>Empire</span><span style="color:#fff;">-&gt;</span><span style="color:#fff;">this_fleet</span><span style="color:#fff;font-weight:bold;">(</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;font-weight:bold;">;</span>
+
+<span style="color:#88f;font-weight:bold;">if</span> <span style="color:#fff;font-weight:bold;">(</span><span style="color:#fff;">!</span><span style="color:#fee;"><b>$</b>Empire</span><span style="color:#fff;">-&gt;</span><span style="color:#fff;">fake</span><span style="color:#fff;font-weight:bold;">(</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;font-weight:bold;">{</span>
+  <span style="color:#fee;"><b>$</b>Empire</span><span style="color:#fff;">-&gt;</span><span style="color:#fff;">writeVariable</span><span style="color:#fff;font-weight:bold;">(</span><span style="color:#f55;">'</span><span style="color:#eaa;">myvar</span><span style="color:#f55;">'</span><span style="color:#fff;">,</span><span style="color:#f55;">56</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;font-weight:bold;">;</span>
+  <span style="color:#fee;"><b>$</b>Empire</span><span style="color:#fff;">-&gt;</span><span style="color:#fff;">message</span><span style="color:#fff;font-weight:bold;">(</span><span style="color:#f55;">'</span><span style="color:#eaa;">Everything is Ok</span><span style="color:#f55;">'</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;font-weight:bold;">;</span>
+  <span style="color:#fee;"><b>$</b>Empire</span><span style="color:#fff;">-&gt;</span><span style="color:#fff;">clearLog</span><span style="color:#fff;font-weight:bold;">(</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;font-weight:bold;">;</span>
+<span style="color:#fff;font-weight:bold;">}</span> <span style="color:#88f;font-weight:bold;">else</span> <span style="color:#fff;font-weight:bold;">{</span>
+  <span style="color:#fee;"><b>$</b>Empire</span><span style="color:#fff;">-&gt;</span><span style="color:#fff;">log</span><span style="color:#fff;font-weight:bold;">(</span><span style="color:#f55;">0</span><span style="color:#fff;">,</span><span style="color:#f55;">"</span><span style="color:#eaa;">Processed fleet </span><span style="color:#f55;">"</span><span style="color:#fff;">.</span><span style="color:#fee;"><b>$</b>Fleet</span><span style="color:#fff;">-&gt;</span><span style="color:#fff;">getProp</span><span style="color:#fff;font-weight:bold;">(</span><span style="color:#f55;">'</span><span style="color:#eaa;">name</span><span style="color:#f55;">'</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;">.</span><span style="color:#f55;">"</span><span style="color:#eaa;">...</span><span style="color:#f55;">"</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;font-weight:bold;">;</span>
+<span style="color:#fff;font-weight:bold;">}</span>
+</pre>
+<p>Один экземпляр этого объекта дается вам при запуске скрипта в переменной <strong>$Empire</strong>.
+Все прочие объекты вы получаете вызывая процедуры экземпляра <strong>$Empire</strong>.</p>
+<p><strong>Методы:</strong></p>
+<blockquote>
+<p><strong class="class_descr">fake</strong> – read/write метод. Если вызывается с параметром, устанавливает
+режим "учебного" выполнения. Если вызывается без параметров – показывает, в каком режиме исполняется скрипт в данный момент
+- в тестовом или в реальном. Это позволит гибко отлаживать скрипты. Если fake установлен в 1, никаких
+реальных действий скрипт не производит, только пишет лог, по возможности проверяя
+корректность операций. Если <strong>fake</strong> равен нулю или не определен, скрипт реально и
+необратимо выполняется на сервере и вы можете посмотреть на результат. По-умолчанию установлена в
+1 при тестовом запуске из редактора и в 0 при автоматическом запуске после расчета хода. Обратите внимание,
+что при создании дочерних объектов они наследуют fake от Empire, но в дальнейшем ведут "самостоятельную" жизнь,
+изменение свойства fake для Empire не повлияет на уже созданные объекты.</p>
+<p><strong class="class_descr">tag</strong> – read/write метод. Если вызывается с параметром,
+назначает метку/переменную длинной 10 символов, которая сохраняется между запусками данного экземпляра
+скрипта. Для чтения метки метод вызывается без параметров. Сразу после создания скрипта содержит
+undef, впоследствии хранит последнее присвоенное значение. Используйте для хранения текущей
+позиции в очереди задач и т.п. вещей.</p>
+<p><strong class="class_descr">message</strong>  – read/write метод. Сообщение, передаваемое скриптом пользователю размером до ста символов.
+	Будет видно в списке флотов. По умолчанию пустое, назначается по желанию, например
+	<strong>message("Идет погрузка...")</strong> и т.п.</p>
+<p><strong class="class_descr">ok</strong> – read/write метод. Статус завершения скрипта. Будет виден в списке флотов,
+если установлено свойство <strong>message</strong>. По-умолчанию устанавливается в
+	1, что означает успешное выполнение. Присвойте 0, чтобы сигнализировать
+	об ошибке. Не зубудьте передать и <strong>message</strong> с подробной информацией.</p>
+<p><strong class="class_descr">this_fleet</strong> – возвращает объект типа <a href="#Fleet">Fleet</a>,
+указывающий на флот, которому принадлежит выполняющийся скрипт. При простой подписке это единственный
+объект типа <a href="#Fleet">Fleet</a>, к которому вы можете получить доступ.</p>
+<p><strong class="class_descr">harrison($X,$Y)</strong> – возвращает объект типа <a href="#Hleet">Harrison</a>,
+указывающий на гарнизон одной из ваших планет. При простой подписке это единственный объект, в который
+и из которого вы можете перемещать юниты. Так же при обычной подписке объект <a href="#Hleet">Harrison</a>
+может работать <strong>только с контейнерами</strong>. Чтобы получить доступ ко всем юнитам, находящимся
+в гарнизоне, необходима расширенная подписка.</p>
+<p><strong class="class_descr">dipRelation($OtherPlayerID)</strong> – возвращает установленные с другим игроком отношения.
+	Может принимать значения undef:undef, 0: enemy, 1: none, 2: ally, 3: vassal, 4: lord.</p>
+<p><strong class="class_descr">fleets</strong> – возвращает объект <a href="#Fleets">Fleets</a>. При обычном платном доступе
+метод не работает, чтобы получить доступ к объекту Fleets необходимо оформить дополнительную подписку.</p>
+<p><strong class="class_descr">planets</strong> – возвращает объект <a href="#Planets">Planets</a>. При обычном платном доступе
+метод не работает, чтобы получить доступ к объекту Planets необходимо оформить дополнительную подписку.</p>
+<p><strong class="class_descr">queue</strong> – возвращает объект <a href="#Queue">Queue</a>. При обычном платном доступе
+метод не работает, чтобы получить доступ к объекту Queue необходимо оформить дополнительную подписку.</p>
+<p><strong class="class_descr">designHouse</strong> – возвращает объект <a href="#DesignHouse">DesignHouse</a>. При обычном платном доступе
+метод не работает, чтобы получить доступ к объекту DesignHouse необходимо оформить дополнительную подписку.</p>
+
+<!--<p><strong class="class_descr">allien_fleets</strong> – возвращает объект <a href="#AllienFleets">AllienFleets</a>. При обычном платном доступе
+метод не работает, чтобы получить доступ к объекту Fleets необходимо оформить дополнительную подписку..</p>-->
+<p><strong class="class_descr">log($Status,$Description)</strong> – вносит запись в лог исполнения скрипта, первый параметр – 
+статус (0 – OK, 1 – сообщение, 2 – предупреждение, 3 – ошибка), второй – текст, описывающий событие.</p>
+<p><strong class="class_descr">writeVariable($VariableName,$ValueToStore)</strong> – сохраняет значение в базу
+данных сервера. Значение может быть прочитано из любого скрипта, выполняемого от имени этого
+пользователя. Метод доступен при оформлении дополнительной подписки, в обычную подписку не включен.
+Метод одинаково необратимо выполняется и в реальном, и в fake режимах.</p>
+<p><strong class="class_descr">readVariable($VariableName)</strong> – читает значение переменной из базы
+данных сервера. Значение может быть записано из любого скрипта, выполняемого от имени этого
+пользователя. Метод доступен при оформлении дополнительной подписки, в обычную подписку не включен.</p>
+<p><strong class="class_descr">getVariablesNames</strong> – читает все доступные имена переменных из базы
+данных сервера и возвращает их как массив. Можно использовать для очистки базы от ненужных переменных (для
+удаления переменной достаточно записать в нее <strong>undef</strong> и при следующей уборке мусора на
+сервере она будет удалена). Метод доступен только в расширенной подписке.</p>
+
+<p><strong class="class_descr">clearLog</strong> – Если лог не пустой, его содержимое отправляется по игровой почте
+	игроку, поэтому часто имеет смысл очистить лог успешных рутинных операций, чтобы не засорять
+	игровую почту, ограничившись заданием <strong>message</strong>.</p>
+<p><strong class="class_descr">getProp($propName)</strong> – возвращает одно из свойств планеты.
+Возможные значения $propName:
+</p>
+<blockquote style="font-size: 90%;">
+<p><strong class="class_descr">paid_lvl</strong> – возвращает 0 в случае базовой подписки и уровень подписки для расширенной.</p>
+<p><strong class="class_descr">turn</strong> – возвращает номер текущего хода.</p>
+<p><strong class="class_descr">player_id</strong> - ID игрока, от имени которого выполняется скрипт.</p>
+<p><strong class="class_descr">race_nature</strong>, <strong class="class_descr">industry_nature</strong>,
+	<strong class="class_descr">unused_resource</strong> – названия ресурса-природы расы, основного и дополнительного ресурса
+	для данного игрока (для хумансов будет 'o', 'm', 'e').</p>
+<p><strong class="class_descr">main_left</strong>, <strong class="class_descr">second_left</strong>,
+	<strong class="class_descr">money_left</strong> – запасы ресурсов у текущего игрока (те, что отображаются вверху экрана).</p>
+<p><strong class="class_descr">main_per_turn</strong>,
+<strong class="class_descr">second_per_turn</strong>,
+<strong class="class_descr">money_per_turn</strong>,
+<strong class="class_descr">main_per_turn_spent</strong>,
+<strong class="class_descr">second_per_turn_spent</strong>,
+<strong class="class_descr">money_per_turn_spent</strong> – затраты/расходы за последний ход.</p>
+<p><strong class="class_descr">tehnology</strong> – уровень технологии.</p>
+<p><strong class="class_descr">race_id</strong> – ID расы игрока.</p>
+<p><strong class="class_descr">t_optimal</strong>, <strong class="class_descr">t_delta</strong> -
+	температурный режим игрока.</p>
+<p><strong class="class_descr">bonus_iq</strong>,
+<strong class="class_descr">bonus_multiply</strong>,
+<strong class="class_descr">bonus_attack</strong>,
+<strong class="class_descr">bonus_dr</strong>,
+<strong class="class_descr">bonus_hp</strong>,
+<strong class="class_descr">bonus_speed</strong>,
+<strong class="class_descr">bonus_build_peace</strong>,
+<strong class="class_descr">bonus_build_war</strong>,
+<strong class="class_descr">bonus_price</strong>,
+<strong class="class_descr">bonus_mining</strong> – расовые бонусы игрока.</p>
+</blockquote>
+</blockquote>
+<h2><a name="Fleet"/>Fleet</h2>
+<pre><span style="color:#88f;font-weight:bold;">my</span> <span style="color:#fee;"><b>$</b>Fleet</span> <span style="color:#fff;">=</span> <span style="color:#fee;"><b>$</b>Empire</span><span style="color:#fff;">-&gt;</span><span style="color:#fff;">this_fleet</span><span style="color:#fff;font-weight:bold;">(</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;font-weight:bold;">;</span>
+<span style="color:#88f;font-weight:bold;">if</span> <span style="color:#fff;font-weight:bold;">(</span><span style="color:#fee;"><b>$</b>Fleet</span><span style="color:#fff;">-&gt;</span><span style="color:#fff;">getProp</span><span style="color:#fff;font-weight:bold;">(</span><span style="color:#f55;">'</span><span style="color:#eaa;">turns_till_arrival</span><span style="color:#f55;">'</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;font-weight:bold;">{</span>
+  <span style="color:#fee;"><b>$</b>Empire</span><span style="color:#fff;">-&gt;</span><span style="color:#fff;">log</span><span style="color:#fff;font-weight:bold;">(</span><span style="color:#f55;">1</span><span style="color:#fff;">,</span><span style="color:#f55;">"</span><span style="color:#eaa;">Fleet </span><span style="color:#f55;">"</span><span style="color:#fff;">.</span><span style="color:#fee;"><b>$</b>Fleet</span><span style="color:#fff;">-&gt;</span><span style="color:#fff;">getProp</span><span style="color:#fff;font-weight:bold;">(</span><span style="color:#f55;">'</span><span style="color:#eaa;">name</span><span style="color:#f55;">'</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;">.</span><span style="color:#f55;">"</span><span style="color:#eaa;"> is still flying, </span><span style="color:#f55;">"</span><span style="color:#fff;">.</span>
+    <span style="color:#fee;"><b>$</b>Fleet</span><span style="color:#fff;">-&gt;</span><span style="color:#fff;">getProp</span><span style="color:#fff;font-weight:bold;">(</span><span style="color:#f55;">'</span><span style="color:#eaa;">turns_till_arrival</span><span style="color:#f55;">'</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;">.</span><span style="color:#f55;">"</span><span style="color:#eaa;"> turns to fly left</span><span style="color:#f55;">"</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;font-weight:bold;">;</span>
+<span style="color:#fff;font-weight:bold;">}</span> <span style="color:#88f;font-weight:bold;">else</span> <span style="color:#fff;font-weight:bold;">{</span>
+  <span style="color:#88f;font-weight:bold;">if</span> <span style="color:#fff;font-weight:bold;">(</span><span style="color:#88f;font-weight:bold;">scalar</span><span style="color:#fff;font-weight:bold;">(</span><span style="color:#fee;"><b>$</b>Fleet</span><span style="color:#fff;">-&gt;</span><span style="color:#fff;">getAllUnits</span><span style="color:#fff;font-weight:bold;">(</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;font-weight:bold;">)</span> <span style="color:#fff;">&gt;</span> <span style="color:#f55;">10</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;font-weight:bold;">{</span>
+    <span style="color:#fee;"><b>$</b>Empire</span><span style="color:#fff;">-&gt;</span><span style="color:#fff;">log</span><span style="color:#fff;font-weight:bold;">(</span><span style="color:#f55;">0</span><span style="color:#fff;">,</span><span style="color:#f55;">"</span><span style="color:#eaa;">Fleet </span><span style="color:#f55;">"</span><span style="color:#fff;">.</span><span style="color:#fee;"><b>$</b>Fleet</span><span style="color:#fff;">-&gt;</span><span style="color:#fff;">getProp</span><span style="color:#fff;font-weight:bold;">(</span><span style="color:#f55;">'</span><span style="color:#eaa;">name</span><span style="color:#f55;">'</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;">.</span><span style="color:#f55;">"</span><span style="color:#eaa;"> has too many</span><span style="color:#f55;">"</span><span style="color:#fff;">.</span>
+      <span style="color:#f55;">"</span><span style="color:#eaa;"> units, time to drop some</span><span style="color:#f55;">"</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;font-weight:bold;">;</span>
+    <span style="color:#fee;"><b>$</b>Fleet</span><span style="color:#fff;">-&gt;</span><span style="color:#fff;">SetBehaviour</span><span style="color:#fff;font-weight:bold;">(</span><span style="color:#f55;">'</span><span style="color:#eaa;">111111</span><span style="color:#f55;">'</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;font-weight:bold;">;</span> <span style="color:#0af;font-style:italic;">#Kill anyone and then invade!</span>
+  <span style="color:#fff;font-weight:bold;">}</span> <span style="color:#88f;font-weight:bold;">else</span> <span style="color:#fff;font-weight:bold;">{</span>
+    <span style="color:#fee;"><b>$</b>Empire</span><span style="color:#fff;">-&gt;</span><span style="color:#fff;">log</span><span style="color:#fff;font-weight:bold;">(</span><span style="color:#f55;">0</span><span style="color:#fff;">,</span><span style="color:#fee;"><b>$</b>Fleet</span><span style="color:#fff;">-&gt;</span><span style="color:#fff;">getProp</span><span style="color:#fff;font-weight:bold;">(</span><span style="color:#f55;">'</span><span style="color:#eaa;">name</span><span style="color:#f55;">'</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;">.</span><span style="color:#f55;">"</span><span style="color:#eaa;"> is too</span><span style="color:#f55;">"</span><span style="color:#fff;">.</span>
+      <span style="color:#f55;">"</span><span style="color:#eaa;"> small, we better escape!</span><span style="color:#f55;">"</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;font-weight:bold;">;</span>
+    <span style="color:#88f;font-weight:bold;">if</span> <span style="color:#fff;font-weight:bold;">(</span><span style="color:#fff;">!</span><span style="color:#fee;"><b>$</b>Fleet</span><span style="color:#fff;">-&gt;</span><span style="color:#fff;">jump</span><span style="color:#fff;font-weight:bold;">(</span><span style="color:#f55;">500</span><span style="color:#fff;">,</span><span style="color:#f55;">500</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;font-weight:bold;">{</span>
+      <span style="color:#88f;font-weight:bold;">my</span> <span style="color:#fee;"><b>$</b>Mes</span><span style="color:#fff;">=</span><span style="color:#f55;">"</span><span style="color:#eaa;">Help! <span style="color:#f00;">\"</span></span><span style="color:#f55;">"</span><span style="color:#fff;">.</span><span style="color:#fee;"><b>$</b>Fleet</span><span style="color:#fff;">-&gt;</span><span style="color:#fff;">getProp</span><span style="color:#fff;font-weight:bold;">(</span><span style="color:#f55;">'</span><span style="color:#eaa;">name</span><span style="color:#f55;">'</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;">.</span><span style="color:#f55;">"</span><span style="color:#eaa;"><span style="color:#f00;">\"</span> can not</span><span style="color:#f55;">"</span><span style="color:#fff;">.</span>
+        <span style="color:#f55;">"</span><span style="color:#eaa;"> escape! Need a human brain here! Help!</span><span style="color:#f55;">"</span><span style="color:#fff;font-weight:bold;">;</span>
+      <span style="color:#fee;"><b>$</b>Empire</span><span style="color:#fff;">-&gt;</span><span style="color:#fff;">log</span><span style="color:#fff;font-weight:bold;">(</span><span style="color:#f55;">3</span><span style="color:#fff;">,</span><span style="color:#fee;"><b>$</b>Mes</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;font-weight:bold;">;</span>
+      <span style="color:#fee;"><b>$</b>Empire</span><span style="color:#fff;">-&gt;</span><span style="color:#fff;">message</span><span style="color:#fff;font-weight:bold;">(</span><span style="color:#fee;"><b>$</b>Mes</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;font-weight:bold;">;</span>
+      <span style="color:#fee;"><b>$</b>Empire</span><span style="color:#fff;">-&gt;</span><span style="color:#fff;">ok</span><span style="color:#fff;font-weight:bold;">(</span><span style="color:#f55;">0</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;font-weight:bold;">;</span>
+    <span style="color:#fff;font-weight:bold;">}</span>
+  <span style="color:#fff;font-weight:bold;">}</span>
+<span style="color:#fff;font-weight:bold;">}</span>
+</pre>
+<p>Объект <strong>Fleet</strong> предоставляет доступ к флотам. Вы можете спрятаться, показаться,
+	совершить гиперпространственный прыжок или оценить полученные повреждения.</p>
+<p>Фактически,
+	вы можете делать все то же самое, что и через веб-интерфейс (кроме отмены для прыжков и для невидимости).
+	Экземпляр этого объекта всегда передается вам в свойстве <strong>this_fleet</strong> объекта
+	<strong>Empire</strong>.</p>
+<p>При расширенной подписке вы получаете доступ к объекту <a href="#Fleets">Fleets</a>, а через него ко
+	<strong>всем</strong> вашим флотам, так что вы можете из одного скрипта управлять несколькими
+	(или даже всеми) своими флотами, координировать их действия, автоматически создавать
+	флоты-лазареты, собирать в них поврежденные юниты, отправлять их на ремонт и т.д. и т.п.</p>
+<p><strong>Методы:</strong></p>
+<blockquote>
+<p><strong class="class_descr">getProp($propName)</strong> – возвращает одно из свойств флота.
+Возможные значения $propName:
+</p>
+<blockquote style="font-size: 90%;">
+<p><strong class="class_descr">id</strong> – ID флота, используемый в БД.</p>
+<p><strong class="class_descr">turns_till_arrival</strong> – время до прибытия. Для флотов, которые никуда не летят, всегда равно нулю.</p>
+<p><strong class="class_descr">x</strong>, <strong class="class_descr">y</strong>  – координаты планеты
+	расположения/назначения, в зависимости от значения <strong>turns_till_arrival</strong>.</p>
+<p><strong class="class_descr">behaviour</strong> – текущее поведение флота, представленное как строка из
+шести цифр. Цифры означают следующее: [1] Attack&amp;invade, [2] Atack, [3] Defend, [4] Help. Первая цифра
+относится к неопределенным игрокам, вторая – к врагам, далее нейтральный игрок, союзник, вассал и лорд.
+По-умолчанию флот имеет поведение '313444'.</p>
+<p><strong class="class_descr">hidden</strong> – текущий статус скрытности флота.</p>
+<p><strong class="class_descr">name</strong> – имя флота.</p>
+<p><strong class="class_descr">fly_range</strong> – дальность полета. Имеет смысл сверяться с этим значением
+	перед отправкой флота в гиперпространство.</p>
+<p><strong class="class_descr">fly_speed</strong> – скорость полета.</p>
+<p><strong class="class_descr">large_ship_count</strong> – число прыгунов во флоте. Его, в числе прочего,
+	видят другие игроки.</p>
+<p><strong class="class_descr">sum_weight</strong> – суммарный вес флота.</p>
+<p><strong class="class_descr">stealth_lvl</strong> – возможности флота скрыться.</p>
+<p><strong class="class_descr">free_carrier_capacity</strong> – свободные взлетные палубы
+	для истребителей.</p>
+<p><strong class="class_descr">free_transport_capacity</strong> – свободные транспортные ячейки.</p>
+<p><strong class="class_descr">ext_name</strong> – «внешнее» имя для флота.</p>
+</blockquote>
+
+<p><strong class="class_descr">fake</strong> – read/write метод. Если вызывается с параметром, устанавливает
+режим "учебного" выполнения для отдельного флота. Если вызывается без параметров – показывает, в каком режиме
+исполняется скрипт для данного флота. Если <strong>fake</strong> равен нулю или не определен, скрипт реально и
+необратимо выполняется на сервере и вы можете посмотреть на результат. По-умолчанию установлена в
+1 при тестовом запуске из редактора и в 0 при автоматическом запуске после расчета хода.</p>
+<p><strong class="class_descr">jump($X,$Y)</strong> – совершить прыжок в указанную точку.
+	Возвращает 1 при успехе undef при неудаче.</p>
+<p><strong class="class_descr">show($Show)</strong> – изменить статус видимости флота. <strong>show(0)</strong>
+	включает невидимость, <strong>show(1)</strong> отключит невидимость. Возвращает 1 при успехе и undef при неудаче.</p>
+<p><strong class="class_descr">createFleetNear($FleetName)</strong> – создает флот по соседству с
+	флотом, для которого вызван метод. Возвращает объект-флот, который можно использовать, к примеру,
+	для перемещения в него юнитов. Эта функция доступна только при подписке на объект <a href="#Fleets">Fleets</a>.</p>
+<p><strong class="class_descr">getUnitByID($UnitID)</strong> – находит во флоте юнит с указанным ID и
+возвращает соответствующий объект-<a href="#Unit">Unit</a>.</p>
+<p><strong class="class_descr">getUnitsByClass($ClassID)</strong> – возвращает массив, содержащий
+	все юниты в выбранном флоте указанного типа. <strong>getUnitsByClass(11)</strong>, к примеру,
+	вернет все зонды во флоте в виде массива.</p>
+<p><strong class="class_descr">getAllUnits()</strong> – возвращает массив, содержащий
+	все юниты в выбранном флоте.</p>
+<p><strong class="class_descr">SetBehaviour($NewBehaviour)</strong> – задает поведение для флота (см.
+свойство <strong>behaviour</strong> выше).</p>
+<p><strong class="class_descr">Rename($NewName,$NewExtName)</strong> – задает новые имена для флота – внутреннее
+	и внешнее.</p>
+<p><strong class="class_descr">Share($PlayerNames,$Mode)</strong> – Расшаривает флот на управление другим игрокам. В <strong>$PlayerNames</strong> записываются имена игроков, которым должно быть передано управление, разделитель – запятая. Установив $Mode в -1 вы отзовете все разрешения.</p>
+
+</blockquote>
+<h2><a name="Harrison"/>Harrison</h2>
+<pre><span style="color:#88f;font-weight:bold;">my</span> <span style="color:#fee;"><b>$</b>Fleet</span> <span style="color:#fff;">=</span> <span style="color:#fee;"><b>$</b>Empire</span><span style="color:#fff;">-&gt;</span><span style="color:#fff;">this_fleet</span><span style="color:#fff;font-weight:bold;">(</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;font-weight:bold;">;</span>
+<span style="color:#88f;font-weight:bold;">my</span> <span style="color:#fee;"><b>$</b>Harrison</span><span style="color:#fff;">=</span><span style="color:#fee;"><b>$</b>Empire</span><span style="color:#fff;">-&gt;</span><span style="color:#fff;">harrison</span><span style="color:#fff;font-weight:bold;">(</span><span style="color:#f55;">500</span><span style="color:#fff;">,</span><span style="color:#f55;">500</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;font-weight:bold;">;</span>
+<span style="color:#88f;font-weight:bold;">my</span> <span style="color:#fcc;"><b>@</b>Colonyes</span><span style="color:#fff;">=</span><span style="color:#fee;"><b>$</b>Harrison</span><span style="color:#fff;">-&gt;</span><span style="color:#fff;">getUnitsByClass</span><span style="color:#fff;font-weight:bold;">(</span><span style="color:#f55;">7</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;font-weight:bold;">;</span>
+<span style="color:#88f;font-weight:bold;">for</span> <span style="color:#fff;font-weight:bold;">(</span><span style="color:#fcc;"><b>@</b>Colonyes</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;font-weight:bold;">{</span>
+	<span style="color:#fee;"><b>$</b>_</span><span style="color:#fff;">-&gt;</span><span style="color:#fff;">transferToAnotherFleet</span><span style="color:#fff;font-weight:bold;">(</span><span style="color:#fee;"><b>$</b>Fleet<span style="color:#fff;">-&gt;</span>getProp("id")</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;font-weight:bold;">;</span>
+<span style="color:#fff;font-weight:bold;">}</span>
+<span style="color:#fee;"><b>$</b>Fleet</span><span style="color:#fff;">-&gt;</span><span style="color:#fff;">jump</span><span style="color:#fff;font-weight:bold;">(</span><span style="color:#f55;">500</span><span style="color:#fff;">,</span><span style="color:#f55;">501</span><span style="color:#fff;font-weight:bold;">)</span> <span style="color:#88f;font-weight:bold;">if</span> <span style="color:#fcc;"><b>@</b>Colonyes</span><span style="color:#fff;font-weight:bold;">;</span>
+</pre>
+<p>По сути, аналог объекта <a href="#Fleet">Fleet</a> во всем, что касается работы с юнитами, но полностью
+	лишенный управления поведением. Вы можете выбирать в нем юниты, перемещать юниты в  него и из него, но
+	и только. При базовой подписке это единственный объект, с которым вы можете проводить перемещения юнитов,
+	то есть вы можете перемещать контейнеры из гарнизона во флот или из флота в гарнизон, но не из флота во флот.
+	При подписке на объект <a href="#Fleets">Fleets</a> этого ограничения нет, вы можете перемещать
+	юниты между флотами и создавать новые флоты.</p>
+<p>Так же при стандартной подписке <strong>Harrison</strong> позволяет выбирать только контейнеры, для доступа
+к другим юнитам необходимо оформить расширенную подписку.</p>
+<p><strong>Методы:</strong></p>
+<blockquote>
+<p><strong class="class_descr">getProp($propName)</strong> – возвращает одно из свойств гарнизона,
+	аналогично методу флота но имеет скудный набор возможных значений $propName:</p>
+<blockquote style="font-size: 90%;">
+<p><strong class="class_descr">x</strong>, <strong class="class_descr">y</strong>  – координаты планеты,
+	которой принадлежит гарнизон.</p>
+</blockquote>
+<p><strong class="class_descr">createFleetNear($FleetName)</strong> – создает флот по соседству с
+	гарнизоном, для которого вызван метод. Возвращает объект-флот, который можно использовать, к примеру,
+	для перемещения в него юнитов. Эта функция доступна только при подписке на объект <a href="#Fleets">Fleets</a>.</p>
+<p><strong class="class_descr">getUnitByID($UnitID)</strong> – находит в гарнизоне юнит с указанным ID и
+возвращает соответствующий объект-<a href="#Unit">Unit</a>.</p>
+<p><strong class="class_descr">getUnitsByClass($ClassID)</strong> – возвращает массив, содержащий
+	все юниты в выбранном гарнизоне указанного типа. <strong>getUnitsByClass(11)</strong>, к примеру,
+	вернет все зонды в гарнизоне в виде массива.</p>
+<p><strong class="class_descr">getAllUnits()</strong> – возвращает массив, содержащий
+	все юниты в выбранном гарнизоне.</p>
+</blockquote>
+
+
+<h2><a name="Fleets"/>Fleets</h2>
+<pre><span style="color:#88f;font-weight:bold;">my</span> <span style="color:#fee;"><b>$</b>Fleets</span><span style="color:#fff;">=</span><span style="color:#fee;"><b>$</b>Empire</span><span style="color:#fff;">-&gt;</span><span style="color:#fff;">fleets</span><span style="color:#fff;font-weight:bold;">(</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;font-weight:bold;">;</span>
+<span style="color:#88f;font-weight:bold;">my</span> <span style="color:#fee;"><b>$</b>Fleet</span><span style="color:#fff;">=</span><span style="color:#fee;"><b>$</b>Empire</span><span style="color:#fff;">-&gt;</span><span style="color:#fff;">this_fleet</span><span style="color:#fff;font-weight:bold;">(</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;font-weight:bold;">;</span>
+
+<span style="color:#88f;font-weight:bold;">my</span> <span style="color:#fff;font-weight:bold;">(</span><span style="color:#fee;"><b>$</b>Unit</span><span style="color:#fff;font-weight:bold;">)</span> <span style="color:#fff;">=</span> <span style="color:#fee;"><b>$</b>Fleet</span><span style="color:#fff;">-&gt;</span><span style="color:#fff;">getUnitsByClass</span><span style="color:#fff;font-weight:bold;">(</span><span style="color:#f55;">11</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;font-weight:bold;">;</span>
+<span style="color:#88f;font-weight:bold;">my</span> <span style="color:#fee;"><b>$</b>AnotherFleet</span> <span style="color:#fff;">=</span> <span style="color:#fee;"><b>$</b>Fleets</span><span style="color:#fff;">-&gt;</span><span style="color:#fff;">getFleetByID</span><span style="color:#fff;font-weight:bold;">(</span><span style="color:#f55;">6353</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;font-weight:bold;">;</span>
+
+<span style="color:#fee;"><b>$</b>Unit</span><span style="color:#fff;">-&gt;</span><span style="color:#fff;">transferToAnotherFleet</span><span style="color:#fff;font-weight:bold;">(</span><span style="color:#f55;">6353</span><span style="color:#fff;font-weight:bold;">)</span> <span style="color:#88f;font-weight:bold;">if</span> <span style="color:#fee;"><b>$</b>Unit</span><span style="color:#fff;font-weight:bold;">;</span>
+
+<span style="color:#88f;font-weight:bold;">for</span> <span style="color:#fff;font-weight:bold;">(</span><span style="color:#fee;"><b>$</b>Fleets</span><span style="color:#fff;">-&gt;</span><span style="color:#fff;">getFleetsByName</span><span style="color:#fff;font-weight:bold;">(</span><span style="color:#f55;">'</span><span style="color:#eaa;">Explo%</span><span style="color:#f55;">'</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;font-weight:bold;">{</span>
+  <span style="color:#88f;font-weight:bold;">unless</span> <span style="color:#fff;font-weight:bold;">(</span><span style="color:#fee;"><b>$</b>_</span><span style="color:#fff;">-&gt;</span><span style="color:#fff;">getProp</span><span style="color:#fff;font-weight:bold;">(</span><span style="color:#f55;">'</span><span style="color:#eaa;">turns_till_arrival</span><span style="color:#f55;">'</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;font-weight:bold;">{</span>
+    <span style="color:#88f;font-weight:bold;">my</span> <span style="color:#fff;font-weight:bold;">(</span><span style="color:#fee;"><b>$</b>Probe</span><span style="color:#fff;font-weight:bold;">)</span> <span style="color:#fff;">=</span> <span style="color:#fee;"><b>$</b>_</span><span style="color:#fff;">-&gt;</span><span style="color:#fff;">getUnitsByClass</span><span style="color:#fff;font-weight:bold;">(</span><span style="color:#f55;">11</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;font-weight:bold;">;</span>
+    <span style="color:#fee;"><b>$</b>Probe</span><span style="color:#fff;">-&gt;</span><span style="color:#fff;">performAction</span><span style="color:#fff;font-weight:bold;">(</span><span style="color:#f55;">1</span><span style="color:#fff;font-weight:bold;">)</span> <span style="color:#88f;font-weight:bold;">if</span> <span style="color:#fee;"><b>$</b>Probe</span><span style="color:#fff;font-weight:bold;">;</span>
+  <span style="color:#fff;font-weight:bold;">}</span>
+<span style="color:#fff;font-weight:bold;">}</span>
+</pre>
+<p>Этот объект не входит в обычную подписку, его нужно оплачивать отдельно. Позволяет
+из любого скрипта управлять всеми флотами.</p>
+<p><strong>Методы:</strong></p>
+<p><strong class="class_descr">getFleetByID($FleetID)</strong> – выбирает флот по ID.</p>
+<p><strong class="class_descr">getFleetsByName($Pattern)</strong> – отбирает все флоты по названию. В названии
+	можно использовать символы % (процент, соответствует любой последовательности символов) и
+	_ (подчеркивание, соответствует одному символу). Возвращает массив.</p>
+<p><strong class="class_descr">getFleetsByLocation($X,$Y)</strong> – отбирает все ваши флоты, находящиеся
+в настоящий момент в системе $X:$Y. Возвращает массив.</p>
+<h2><a name="Unit"/>Unit</h2>
+<pre><span style="color:#88f;font-weight:bold;">my</span> <span style="color:#fee;"><b>$</b>Fleet</span><span style="color:#fff;">=</span><span style="color:#fee;"><b>$</b>Empire</span><span style="color:#fff;">-&gt;</span><span style="color:#fff;">this_fleet</span><span style="color:#fff;font-weight:bold;">(</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;font-weight:bold;">;</span>
+<span style="color:#88f;font-weight:bold;">my</span> <span style="color:#fee;"><b>$</b>Hospital</span><span style="color:#fff;font-weight:bold;">;</span>
+<span style="color:#88f;font-weight:bold;">for</span> <span style="color:#fff;font-weight:bold;">(</span><span style="color:#fee;"><b>$</b>Fleet</span><span style="color:#fff;">-&gt;</span><span style="color:#fff;">getAllUnits</span><span style="color:#fff;font-weight:bold;">(</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;font-weight:bold;">{</span>
+  <span style="color:#0af;font-style:italic;"># this simple script will only work with</span>
+  <span style="color:#0af;font-style:italic;"># non-transportable units</span>
+  <span style="color:#88f;font-weight:bold;">if</span> <span style="color:#fff;font-weight:bold;">(</span><span style="color:#fee;"><b>$</b>_</span><span style="color:#fff;">-&gt;</span><span style="color:#fff;">getProp</span><span style="color:#fff;font-weight:bold;">(</span><span style="color:#f55;">'</span><span style="color:#eaa;">max_hitpoints</span><span style="color:#f55;">'</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;">/</span><span style="color:#fee;"><b>$</b>_</span><span style="color:#fff;">-&gt;</span><span style="color:#fff;">getProp</span><span style="color:#fff;font-weight:bold;">(</span><span style="color:#f55;">'</span><span style="color:#eaa;">hit_pointsleft</span><span style="color:#f55;">'</span><span style="color:#fff;font-weight:bold;">)</span> <span style="color:#fff;">&lt;</span> <span style="color:#f55;">0.2</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;font-weight:bold;">{</span>
+    <span style="color:#0af;font-style:italic;"># below 20% HP left, escape to the nearest base</span>
+    <span style="color:#88f;font-weight:bold;">unless</span> <span style="color:#fff;font-weight:bold;">(</span><span style="color:#fee;"><b>$</b>AnotherFleet</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;font-weight:bold;">{</span>
+      <span style="color:#fee;"><b>$</b>Hospital</span><span style="color:#fff;">=</span><span style="color:#fee;"><b>$</b>Fleet</span><span style="color:#fff;">-&gt;</span><span style="color:#fff;">createFleetNear</span><span style="color:#fff;font-weight:bold;">(</span><span style="color:#f55;">'</span><span style="color:#eaa;">Field hospital</span><span style="color:#f55;">'</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;font-weight:bold;">;</span>
+    <span style="color:#fff;font-weight:bold;">}</span>
+    <span style="color:#fee;"><b>$</b>_</span><span style="color:#fff;">-&gt;</span><span style="color:#fff;">transferToAnotherFleet</span><span style="color:#fff;font-weight:bold;">(</span><span style="color:#fee;"><b>$</b>Hospital</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;font-weight:bold;">;</span>
+  <span style="color:#fff;font-weight:bold;">}</span>
+<span style="color:#fff;font-weight:bold;">}</span>
+
+<span style="color:#88f;font-weight:bold;">if</span> <span style="color:#fff;font-weight:bold;">(</span><span style="color:#fee;"><b>$</b>Hospital</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;font-weight:bold;">{</span>
+  <span style="color:#fee;"><b>$</b>Hospital</span><span style="color:#fff;">-&gt;</span><span style="color:#fff;">jump</span><span style="color:#fff;font-weight:bold;">(</span><span style="color:#f55;">500</span><span style="color:#fff;">,</span><span style="color:#f55;">500</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;font-weight:bold;">;</span>
+<span style="color:#fff;font-weight:bold;">}</span>
+</pre>
+<p>Позволяет управлять отдельным юнитом – перемещать его из флота во флот (требуется дополнительная подписка)
+и использовать его специальные умения (доступно в обычной подписке).</p>
+<p><strong>Методы:</strong></p>
+<blockquote>
+<p><strong class="class_descr">getProp($propName)</strong> – возвращает одно из свойств юнита.
+Возможные значения $propName:
+</p>
+<blockquote style="font-size: 90%;">
+<p><strong class="class_descr">id</strong> – ID юнита.</p>
+<p><strong class="class_descr">lvl</strong> – уровень юнита.</p>
+<p><strong class="class_descr">building_id</strong> – класс юнита (11 – зонд).</p>
+<p><strong class="class_descr">hit_pointsleft</strong> – сколько у юнита осталось жизни.</p>
+<p><strong class="class_descr">tag</strong> – текстовый тег, заполняется для контейнеров.</p>
+<p><strong class="class_descr">i_tag</strong> – числовой тег, заполняется для контейнеров.</p>
+<p><strong class="class_descr">unwrapped</strong> – указывает, является ли юнит контейнером чужих (undef – нет)
+	и если является, то был ли он распакован (1). Если <strong>unwrapped==0</strong>, контейнер
+	требует распаковки.</p>
+<p><strong class="class_descr">creator_race</strong> – раса-создатель юнита.</p>
+<p><strong class="class_descr">max_hitpoints</strong> – максимальное число очков жизни для юнита.</p>
+<p><strong class="class_descr">is_ground_unit</strong> – юнит участвует в наземных операциях.</p>
+<p><strong class="class_descr">is_space_ship</strong> – юнит участвует в орбитальных операциях.</p>
+<p><strong class="class_descr">is_transportable</strong> – 0 юнит не является транспортируемым, 1 перевозится на транспортах,
+	2 на авианосцах.</p>
+<p><strong class="class_descr">carrier_capacity</strong> – число взлетных палуб для истребителей.</p>
+<p><strong class="class_descr">transport_capacity</strong> – число транспортных отсеков.</p>
+<p><strong class="class_descr">fly_range</strong> – дальность полета (может отличаться от дальности флота).</p>
+<p><strong class="class_descr">fly_speed</strong> – скорость полета (может отличаться от скорости флота).</p>
+<p><strong class="class_descr">weight</strong> – вес.</p>
+<p><strong class="class_descr">class</strong> – тип юнита. 1 Boat, 3 Destroyer, 4 Battle-cruiser, 5 Carrier, 6 Transport,
+  7 Civil (Colony, Probe, Building), 8 infantry, 9 Mech.</p>
+</blockquote><p><strong class="class_descr">performAction($ActionID)</strong> – выполнение спецзадания. ID
+	заданий (зачистка=2, исследование зондом=1, выгрузка контейнера=3 и т.д.) можно подсмотреть
+	в url web-интерфейса. Возвращает 1 при успехе и undef при неудаче.</p>
+<p><strong class="class_descr">transferToAnotherFleet($FleetID)</strong> – переносит юнит в другой
+	флот. Эта функция доступна при подписке на объект <a href="#Fleets">Fleets</a>. Возвращает 1 при успехе и undef при неудаче.
+	В настоящий момент эта операция НЕ МЕНЯЕТ свойств объектов-флотов, как-то число свободных взлетных палуб,
+	вес и т.п. Если вам нужны новые значения этих свойств у флотов, запросите создание объектов <a href="#Fleet">Fleet</a>
+	заново после завершения всех перемещений. Если в качестве ID передан 0, флот перемещается в гарнизон.</p>
+<p><strong class="class_descr">getActions</strong> – возвращает ссылку на массив ссылок на хэши, содержащие информацию о
+	спецзаданиях для этого юнита. Каждый элемент массива (хэш) может содержать следующие ключи:</p>
+<blockquote style="font-size: 90%;">
+<p><strong class="class_descr">action</strong> – ID спецзадания (1 для разведки зондом).</p>
+<p><strong class="class_descr">cost_main</strong>, <strong class="class_descr">cost_second</strong>, <strong class="class_descr">cost_money</strong> -
+стоимость активации спецзадания.</p>
+<p><strong class="class_descr">maxcount</strong> – ограниченно ли число спец-заданий на одной планете (к примеру,
+	зачистку может производить только одно подразделение пехоты на планете).</p>
+<!--<p><strong class="class_descr">planet_can_be</strong> – строка, описывающая, на каких планетах допустимо
+	выполнение задания. O:Owner E:Empty W:Enemy U:Undef N:None A:Ally L:Lord V:Vassal.</p>-->
+<p><strong class="class_descr">request_id</strong> – если содержит не undef, данное спецзадание
+	для юнита уже активизировано.</p>
+</blockquote>
+<p><strong class="class_descr">disband</strong> – распускает юнит. Функция доступна только в расширенной подписке. Возвращает 1 при успехе, при неуспехе undef
+	(к примеру, при попытке распустить транспорт во флоте с грузом).</p>
+<p><strong class="class_descr">unpack</strong> – вскрывает контейнер, если это контейнер. Функция доступна только в расширенной подписке.</p>
+</blockquote>
+<h2><a name="Planets"/>Planets</h2>
+<pre>
+<span style="color:#88f;font-weight:bold;">my</span> <span style="color:#fee;"><b>$</b>Planets</span><span style="color:#fff;">=</span><span style="color:#fee;"><b>$</b>Empire</span><span style="color:#fff;">-&gt;</span><span style="color:#fff;">planets</span><span style="color:#fff;font-weight:bold;">(</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;font-weight:bold;">;</span>
+<span style="color:#88f;font-weight:bold;">my</span> <span style="color:#fee;"><b>$</b>Home</span><span style="color:#fff;">=</span><span style="color:#fee;"><b>$</b>Planets</span><span style="color:#fff;">-&gt;</span><span style="color:#fff;">get</span><span style="color:#fff;font-weight:bold;">(</span><span style="color:#f55;">500</span><span style="color:#fff;">,</span><span style="color:#f55;">500</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;font-weight:bold;">;</span>
+<span style="color:#fee;"><b>$</b>Empire</span><span style="color:#fff;">-&gt;</span><span style="color:#fff;">log</span><span style="color:#fff;font-weight:bold;">(</span><span style="color:#f55;">1</span><span style="color:#fff;">,</span><span style="color:#f55;">"</span><span style="color:#eaa;">Population on the HW is </span><span style="color:#f55;">"</span><span style="color:#fff;">.</span><span style="color:#fee;"><b>$</b>Home</span><span style="color:#fff;">-&gt;</span><span style="color:#fff;">getProp</span><span style="color:#fff;font-weight:bold;">(</span><span style="color:#f55;">'</span><span style="color:#eaa;">population</span><span style="color:#f55;">'</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;font-weight:bold;">;</span>
+<span style="color:#88f;font-weight:bold;">my</span> <span style="color:#fee;"><b>$</b>Fleet</span> <span style="color:#fff;">=</span> <span style="color:#fee;"><b>$</b>Empire</span><span style="color:#fff;">-&gt;</span><span style="color:#fff;">this_fleet</span><span style="color:#fff;font-weight:bold;">(</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;font-weight:bold;">;</span>
+<span style="color:#88f;font-weight:bold;">my</span> <span style="color:#fee;"><b>$</b>WhereToRun</span><span style="color:#fff;">=</span><span style="color:#fee;"><b>$</b>Planets</span><span style="color:#fff;">-&gt;</span><span style="color:#fff;">getNearestJumpable</span><span style="color:#fff;font-weight:bold;">(</span>
+	<span style="color:#fee;"><b>$</b>Fleet</span><span style="color:#fff;">-&gt;</span><span style="color:#fff;">getProp</span><span style="color:#fff;font-weight:bold;">(</span><span style="color:#f55;">'</span><span style="color:#eaa;">x</span><span style="color:#f55;">'</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;">,</span><span style="color:#fee;"><b>$</b>Fleet</span><span style="color:#fff;">-&gt;</span><span style="color:#fff;">getProp</span><span style="color:#fff;font-weight:bold;">(</span><span style="color:#f55;">'</span><span style="color:#eaa;">y</span><span style="color:#f55;">'</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;font-weight:bold;">;</span>
+<span style="color:#fee;"><b>$</b>Fleet</span><span style="color:#fff;">-&gt;</span><span style="color:#fff;">jump</span><span style="color:#fff;font-weight:bold;">(</span><span style="color:#fee;"><b>$</b>WhereToRun</span><span style="color:#fff;">-&gt;</span><span style="color:#fff;">getProp</span><span style="color:#fff;font-weight:bold;">(</span><span style="color:#f55;">'</span><span style="color:#eaa;">x</span><span style="color:#f55;">'</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;">,</span><span style="color:#fee;"><b>$</b>WhereToRun</span><span style="color:#fff;">-&gt;</span><span style="color:#fff;">getProp</span><span style="color:#fff;font-weight:bold;">(</span><span style="color:#f55;">'</span><span style="color:#eaa;">y</span><span style="color:#f55;">'</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;font-weight:bold;">;</span>
+</pre>
+<p>Объект <strong>Planets</strong> позволяет отбирать планеты по координатам и другим параметрам. Найдя
+планеты, соответствующие вашему запросу, <strong>Planets</strong> вернет вам объект(ы)
+<a href="#Planet">Planet</a>, через которые вы сможете получить доступ к свойствам планет и очереди
+заданий на строительство. Объект доступен только в расширенной подписке.</p>
+<p><strong>Методы:</strong></p>
+<blockquote>
+<p><strong class="class_descr">get($X,$Y)</strong> – возвращает планету с заданными координатами.</p>
+<p><strong class="class_descr">getAllMy</strong> – возвращает массив, содержащий все ваши планеты.</p>
+<p><strong class="class_descr">getAllMyQuick</strong> – возвращает массив, содержащий все ваши планеты,
+	но со списком свойств, ограниченным <strong>x</strong>, <strong>y</strong> и <strong>name</strong>,
+	благодаря чему работает значительно быстрее <strong>getAllMy</strong>.</p>
+<p><strong class="class_descr">getAllJumpable</strong> – возвращает массив, содержащий все ваши
+	планеты а так же открытые для вас планеты союзников.</p>
+<p><strong class="class_descr">getAllJumpableQuick</strong> – возвращает массив, содержащий все ваши
+	планеты а так же открытые для вас планеты союзников. В отличие от <strong>getAllJumpable</strong>
+	для возвращаемых планет не возвращаются запасы ресурсов, не вычисляется пригодность и прочее.
+	Возвращаемые объекты имеют только свойства <strong>x</strong>, <strong>y</strong>,
+	<strong>name</strong>, <strong>owner_id</strong>, <strong>jumpable</strong> (всегда 1).
+	Работает на порядок быстрее обычной 	<strong>getAllJumpable</strong>.</p>
+<p><strong class="class_descr">getAllKnown</strong> – возвращает массив, содержащий все известные
+	вам планеты. Сюда включаются планеты, о которых вы знаете только имя владельца, планеты,
+	которые вы исследовали сами и планеты, свойства которых вы задали вручную.
+	В связи с большой загруженностью функции в <strong>getAllKnown</strong> не вычисляется
+	степень пригодности планеты для вас, возвращаются только свойства
+	<strong>x</strong>, <strong>y</strong>, <strong>o</strong>,
+	<strong>e</strong>, <strong>m</strong>, <strong>t</strong>,
+	<strong>s</strong>, <strong>name</strong>, <strong>owner_id</strong>,
+	<strong>owner_name</strong>, <strong>fake_info</strong></p>
+<p><strong class="class_descr">getAllKnownQuick</strong> - возвращает массив, содержащий все известные
+	вам планеты. Сюда включаются планеты, о которых вы знаете только имя владельца, планеты, которые вы исследовали сами
+	и планеты, свойства которых вы задали вручную. В отличие от <strong>getAllKnown</strong> возвращаются только свойства
+	<strong>x</strong>, <strong>y</strong>, <strong>owner_id</strong> и <strong>my</strong>. Работает заметно быстрее
+	стандартного метода <strong>getAllKnown</strong>.</p>
+<p><strong class="class_descr">getReacheble($X,$Y,$Distance)</strong> – возвращает массив планет,
+доступных флоту с дальностью $Distance и расположенному в точке $X:$Y. Открытость при отборе не
+	учитывается, это просто готовая процедура для отбора всех планет, попадающих в радиус $Distance.</p>
+<p><strong class="class_descr">getReachebleJumpable($X,$Y,$Distance)</strong> – возвращает
+массив открытых для игрока планет, доступных флоту с дальностью $Distance и расположенному в точке
+	$X:$Y. В массив входят только планеты игрока и открытые для него планеты союзников. Планеты отсортированы
+	по удаленности (первая планета в массиве та же, что возвращается <strong>getNearestJumpable($X,$Y)</strong>).</p>
+<p><strong class="class_descr">getNearestMy($X,$Y)</strong> – возвращает ближайшую к указанной точке
+вашу планету.</p>
+<p><strong class="class_descr">getNearestJumpable($X,$Y)</strong> – возвращает ближайшую к указанной точке
+планету, открытую для прыжков.</p>
+<p><strong class="class_descr">getRectangle($left, $top, $right, $bottom)</strong> - возвращает массив с планетами из заданного прямоугольника. Область не должна
+	пересекать границ вселенной. Область включает в себя указанные координаты (<strong>$X &gt;= $left &amp;&amp; $X &lt;= $right</strong>). Возвращаемые объекты имеют свойства
+	<strong>x</strong>, <strong>y</strong>, <strong>o</strong>,
+	<strong>e</strong>, <strong>m</strong>, <strong>t</strong>,
+	<strong>s</strong>, <strong>name</strong>, <strong>owner_id</strong>,
+	<strong>owner_name</strong>, <strong>fake_info</strong>, <strong>img_surface</strong>,
+	<strong>age</strong>, <strong>jumpable</strong>, <strong>my</strong>.</p></blockquote>
+<h2><a name="Planet"/>Planet</h2>
+<pre><span style="color:#88f;font-weight:bold;">my</span> <span style="color:#fee;"><b>$</b>Planets</span><span style="color:#fff;">=</span><span style="color:#fee;"><b>$</b>Empire</span><span style="color:#fff;">-&gt;</span><span style="color:#fff;">planets</span><span style="color:#fff;font-weight:bold;">(</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;font-weight:bold;">;</span>
+<span style="color:#88f;font-weight:bold;">my</span> <span style="color:#fee;"><b>$</b>Home</span><span style="color:#fff;">=</span><span style="color:#fee;"><b>$</b>Planets</span><span style="color:#fff;">-&gt;</span><span style="color:#fff;">get</span><span style="color:#fff;font-weight:bold;">(</span><span style="color:#f55;">500</span><span style="color:#fff;">,</span><span style="color:#f55;">500</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;font-weight:bold;">;</span>
+<span style="color:#fee;"><b>$</b>Empire</span><span style="color:#fff;">-&gt;</span><span style="color:#fff;">log</span><span style="color:#fff;font-weight:bold;">(</span><span style="color:#f55;">1</span><span style="color:#fff;">,</span><span style="color:#f55;">"</span><span style="color:#eaa;">Population on the HW is </span><span style="color:#f55;">"</span><span style="color:#fff;">.</span><span style="color:#fee;"><b>$</b>Home</span><span style="color:#fff;">-&gt;</span><span style="color:#fff;">getProp</span><span style="color:#fff;font-weight:bold;">(</span><span style="color:#f55;">'</span><span style="color:#eaa;">population</span><span style="color:#f55;">'</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;font-weight:bold;">;</span>
+<span style="color:#fee;"><b>$</b>Empire</span><span style="color:#fff;">-&gt;</span><span style="color:#fff;">log</span><span style="color:#fff;font-weight:bold;">(</span><span style="color:#f55;">1</span><span style="color:#fff;">,</span><span style="color:#f55;">"</span><span style="color:#eaa;">Free people left on the HW </span><span style="color:#f55;">"</span><span style="color:#fff;">.</span><span style="color:#fee;"><b>$</b>Home</span><span style="color:#fff;">-&gt;</span><span style="color:#fff;">getProp</span><span style="color:#fff;font-weight:bold;">(</span><span style="color:#f55;">'</span><span style="color:#eaa;">free_pepl</span><span style="color:#f55;">'</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;font-weight:bold;">;</span>
+</pre>
+<p>Открывает доступ к информации по планетам. Вы можете узнать, ваша ли это планета, была ли она исследована,
+	какова температура поверхности и актуальна ли информация о текущем владельце. Объект доступен только в расширенной подписке.</p>
+<p><strong>Методы:</strong></p>
+<blockquote>
+<p><strong class="class_descr">getProp($propName)</strong> – возвращает одно из свойств планеты.
+Возможные значения $propName:
+</p>
+<blockquote style="font-size: 90%;">
+<p><strong class="class_descr">o</strong>, <strong class="class_descr">e</strong>, <strong class="class_descr">m</strong>,
+<strong class="class_descr">t</strong>, <strong class="class_descr">s</strong> – характеристики планеты.
+Если планета не была вами исследована и вы вручную не указали ее свойства, все значения будут undef.</p>
+<p><strong class="class_descr">name</strong> – имя планеты, зарегистрированное при вашем последнем посещении.</p>
+
+<p><strong class="class_descr">image</strong> – номер картинки планеты.</p>
+<p><strong class="class_descr">img_surface</strong> – номер размера планеты (получается округлением вниз
+	значения <strong>s</strong>). Сложив значения <strong>image</strong> и
+	<strong>img_surface</strong> получаем полное имя картинки (25 + 4='254.gif').</p>
+<p><strong class="class_descr">fake_info</strong> – если информация о планете получена вашим собственным зондом,
+	содержит 0. Если вы вручную ввели свойства планеты и не владеете достоверной информацией, содержит 1.</p>
+<p><strong class="class_descr">population</strong> – население на планете. Содержит информацию
+	только по вашим мирам и по мирам, на которых вы произвели разведку населения.</p>
+<p><strong class="class_descr">free_pepl</strong> – свободное население на планете. Содержит информацию
+	только по вашим мирам и по мирам, на которых вы произвели разведку населения.</p>
+<p><strong class="class_descr">x</strong>, <strong class="class_descr">y</strong> – координаты планеты.</p>
+<p><strong class="class_descr">jumpable</strong> – открыта ли для вас планета, можете ли вы стартовать
+	с нее при гиперпрыжках.</p>
+<p><strong class="class_descr">owner_id</strong> – ID владельца планеты.</p>
+<p><strong class="class_descr">owner_name</strong> – имя владельца планеты.</p>
+<p><strong class="class_descr">age</strong> – степень актуальности информации о владельце планеты. Для планет,
+	над которыми висят ваши флоты, age всегда больше нуля, что означает гарантированное соответствие информации
+	реальному положению вещей. Для планет, над которыми ваших флотов уже нет, <strong>age</strong> принимает
+	значение 0, что отмечает возможную неточность ваших сведений.</p>
+<p><strong class="class_descr">my</strong> – установлено в 1 для ваших планет.</p>
+<p><strong class="class_descr">popgrowth</strong> – Скорость прироста населения на планете для вашей расы.
+	Для ваших планет показывает текущий прирост с учетом степени заселенности. Для не-ваших планет
+	показывает базовый прирост населения. Возвращает число процентов.</p>
+<p><strong class="class_descr">main_mining</strong>, <strong class="class_descr">second_mining</strong>, <strong class="class_descr">money_mining</strong> – прибыль
+	от планеты в основном ресурсе, вторичном и в деньгах соответственно.</p>
+<p><strong class="class_descr">coment</strong> – назначенный планете комментарий.</p>
+<p><strong class="class_descr">icon</strong> – назначенная планете иконка.</p>
+</blockquote>
+</blockquote>
+<h2><a name="Queue"/>Queue</h2>
+<pre><span style="color:#88f;font-weight:bold;">my</span> <span style="color:#fee;"><b>$</b>q</span><span style="color:#fff;">=</span><span style="color:#fee;"><b>$</b>Empire</span><span style="color:#fff;">-&gt;</span><span style="color:#fff;">queue</span><span style="color:#fff;font-weight:bold;">(</span><span style="color:#f55;">500</span><span style="color:#fff;">,</span><span style="color:#f55;">500</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;font-weight:bold;">;</span>
+<span style="color:#fee;"><b>$</b>Empire</span><span style="color:#fff;">-&gt;</span><span style="color:#fff;">log</span><span style="color:#fff;font-weight:bold;">(</span><span style="color:#f55;">1</span><span style="color:#fff;">,</span><span style="color:#fee;"><b>$</b>q</span><span style="color:#fff;">-&gt;</span><span style="color:#fff;">itemsCount</span><span style="color:#fff;font-weight:bold;">(</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;">.</span><span style="color:#f55;">"</span><span style="color:#faa;"> items in queue</span><span style="color:#f55;">"</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;font-weight:bold;">;</span>
+
+<span style="color:#88f;font-weight:bold;">my</span> <span style="color:#fee;"><b>$</b>Item</span><span style="color:#fff;">=</span><span style="color:#fee;"><b>$</b>q</span><span style="color:#fff;">-&gt;</span><span style="color:#fff;">itemData</span><span style="color:#fff;font-weight:bold;">(</span><span style="color:#fee;"><b>$</b>q</span><span style="color:#fff;">-&gt;</span><span style="color:#fff;">itemsCount</span><span style="color:#fff;font-weight:bold;">(</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;">-</span><span style="color:#f55;">1</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;font-weight:bold;">;</span>
+<span style="color:#88f;font-weight:bold;">my</span> <span style="color:#fee;"><b>$</b>ItemID</span><span style="color:#fff;">=</span><span style="color:#fee;"><b>$</b>Item</span><span style="color:#fff;">-&gt;</span><span style="color:#fff;font-weight:bold;">{</span><span style="color:#f55;">'</span><span style="color:#faa;">id</span><span style="color:#f55;">'</span><span style="color:#fff;font-weight:bold;">}</span><span style="color:#fff;font-weight:bold;">;</span>
+<span style="color:#fee;"><b>$</b>q</span><span style="color:#fff;">-&gt;</span><span style="color:#fff;">dropJob</span><span style="color:#fff;font-weight:bold;">(</span><span style="color:#fee;"><b>$</b>ItemID</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;font-weight:bold;">;</span>
+<span style="color:#fee;"><b>$</b>q</span><span style="color:#fff;">-&gt;</span><span style="color:#fff;">addPackingTask</span><span style="color:#fff;font-weight:bold;">(</span><span style="color:#f55;">'</span><span style="color:#faa;">main</span><span style="color:#f55;">'</span><span style="color:#fff;">,</span><span style="color:#f55;">500</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;font-weight:bold;">;</span></pre>
+<p>Позволяет манипулировать очередью заданий на планете. Объект доступен только в расширенной подписке.</p>
+<p><strong>Методы:</strong></p>
+<blockquote>
+<p><strong class="class_descr">itemsCount</strong> – возвращает длину очереди построек на планете.</p>
+<p><strong class="class_descr">itemData($ItemN)</strong> – возвращает ссылку на хэш, содержащий информацию о задаче в очереди построек. Хэш содержит
+следующие ключи:</p>
+<blockquote style="font-size: 90%;">
+<p><strong class="class_descr">class</strong> – класс здания. 11 – это зонд.</p>
+<p><strong class="class_descr">is_war</strong> – является ли постройка военной.</p>
+<p><strong class="class_descr">take_turns</strong> – число ходов, требующееся на этой планете для постройки данного здания. Для
+	первого в очереди здания это число уже учитывает проделанную работу, то есть если у вас корвет
+	строится за 5 ходов и четыре хода уже прошло, здесь будет что-то вроде 0.568006.</p>
+<p><strong class="class_descr">turns_left</strong> – количество ходов оставшихся до постройки данного элемента очереди,
+	сумма <strong>take_turns</strong> по всем элементам очереди включая данный.</p>
+<p><strong class="class_descr">building_points_done</strong> – число человеко-часов, затраченных на
+	здание. Учитывает бонусы на скорость постройки.</p>
+<p><strong class="class_descr">build_speed</strong> – число не-бонусных человеко-часов, требуемое
+	для этого здания. Можно подсмотреть в свойствах юнита в столбце "Прототип", но для наместника тут поправка
+	уже учтена.</p>
+<p><strong class="class_descr">id</strong> – ID этого задания. На него нужно ссылаться, в частности, если вы хотите
+	удалить свое задание из очереди.</p>
+<p><strong class="class_descr">lvl</strong> – прогнозируемый уровень производимого юнита. При смене вашего тех. уровня тоже
+	может измениться.</p>
+<p><strong class="class_descr">tag</strong> – поле, содержащее информацию о содержимом контейнера/задания
+	на оприходование контейнера.</p>
+</blockquote>
+<p><strong class="class_descr">dropJob($JobID)</strong> – удаление задания из очереди. Принимает ID задания,
+	который следует получать из поля <strong>id</strong> хэша, возвращаемого методом <strong>itemData</strong>.</p>
+<p><strong class="class_descr">addJob($Class)</strong> – добавляет новое задание в конец очереди построек. В
+	качестве параметра требует ID класса юнитов, <strong>addJob(11)</strong> добавит в очередь зонд.</p>
+<p><strong class="class_descr">addCustomizeTask($ItemID)</strong> – добавляет в очередь задание на
+	оприходование чужого контейнера. В качестве параметра принимает ID юнита-контейнера.</p>
+<p><strong class="class_descr">addPackingTask($WhatToPack[,$HowManyToPack])</strong> – добавляет
+	задание на упаковку юнита/ресурса. Если первый параметр $WhatToPack равен <strong>main</strong>,
+	<strong>second</strong> или <strong>money</strong> то будут упакованы основной ресурс, вторичный и кредиты
+	соответственно. В этом случае будет упаковано $HowManyToPack ресурса. В противном случае второй
+	параметр игнорируется, а первый должен быть ID юнита, уже расположенного в гарнизоне, который вы
+	хотите упаковать.</p>
+<p><strong class="class_descr">addPartsPackingTask($PartID,$Lvl,$PartsNumber)</strong> – добавляет
+	задание на упаковку контейнера, содержащего $PartsNumber деталей типа $PartID и уровня $Lvl. Посмотреть
+	значения для $PartID можно в окне выбрра деталей для упаковки.</p>
+</blockquote>
+<h2><a name="DesignHouse"/>DesignHouse</h2>
+<pre><span style="color:#88f;font-weight:bold;">my</span> <span style="color:#fcc;"><b>@</b>Protos</span><span style="color:#fff;">=</span><span style="color:#fee;"><b>$</b>Empire</span><span style="color:#fff;">-&gt;</span><span style="color:#fff;">designHouse</span><span style="color:#fff;font-weight:bold;">(</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;">-&gt;</span><span style="color:#fff;">getPrototypes</span><span style="color:#fff;font-weight:bold;">(</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;font-weight:bold;">;</span>
+<span style="color:#fee;"><b>$</b>Empire</span><span style="color:#fff;">-&gt;</span><span style="color:#fff;">log</span><span style="color:#fff;font-weight:bold;">(</span><span style="color:#f55;">0</span><span style="color:#fff;">,</span><span style="color:#f55;">'</span><span style="color:#faa;">Dumping HP/Price for all units...</span><span style="color:#f55;">'</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;font-weight:bold;">;</span>
+<span style="color:#88f;font-weight:bold;">for</span> <span style="color:#fff;font-weight:bold;">(</span><span style="color:#fcc;"><b>@</b>Protos</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;font-weight:bold;">{</span>
+  <span style="color:#88f;font-weight:bold;">my</span> <span style="color:#fee;"><b>$</b>Price</span><span style="color:#fff;">=</span><span style="color:#fee;"><b>$</b>_</span><span style="color:#fff;">-&gt;</span><span style="color:#fff;">getProp</span><span style="color:#fff;font-weight:bold;">(</span><span style="color:#f55;">'</span><span style="color:#faa;">support_main</span><span style="color:#f55;">'</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;">+</span>
+		<span style="color:#fee;"><b>$</b>_</span><span style="color:#fff;">-&gt;</span><span style="color:#fff;">getProp</span><span style="color:#fff;font-weight:bold;">(</span><span style="color:#f55;">'</span><span style="color:#faa;">support_second</span><span style="color:#f55;">'</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#ccc;">*</span><span style="color:#f55;">2</span><span style="color:#fff;font-weight:bold;">;</span>
+  <span style="color:#88f;font-weight:bold;">my</span> <span style="color:#fee;"><b>$</b>PriceToHPRate</span><span style="color:#fff;">=</span><span style="color:#fee;"><b>$</b>Price</span><span style="color:#fff;">?</span><span style="color:#33f;">sprintf</span><span style="color:#fff;font-weight:bold;">(</span><span style="color:#f55;">'</span><span style="color:#faa;">%1.2f</span><span style="color:#f55;">'</span><span style="color:#fff;">,</span>
+		<span style="color:#fee;"><b>$</b>_</span><span style="color:#fff;">-&gt;</span><span style="color:#fff;">getProp</span><span style="color:#fff;font-weight:bold;">(</span><span style="color:#f55;">'</span><span style="color:#faa;">hit_points</span><span style="color:#f55;">'</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;">/</span><span style="color:#fee;"><b>$</b>Price</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;">:</span><span style="color:#f55;">'</span><span style="color:#faa;">!!!</span><span style="color:#f55;">'</span><span style="color:#fff;font-weight:bold;">;</span>
+  <span style="color:#fee;"><b>$</b>Empire</span><span style="color:#fff;">-&gt;</span><span style="color:#fff;">log</span><span style="color:#fff;font-weight:bold;">(</span><span style="color:#f55;">1</span><span style="color:#fff;">,</span><span style="color:#fee;"><b>$</b>_</span><span style="color:#fff;">-&gt;</span><span style="color:#fff;">getProp</span><span style="color:#fff;font-weight:bold;">(</span><span style="color:#f55;">'</span><span style="color:#faa;">building_id</span><span style="color:#f55;">'</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;">.</span><span style="color:#f55;">'</span><span style="color:#faa;">: </span><span style="color:#f55;">'</span><span style="color:#fff;">.</span>
+		<span style="color:#fee;"><b>$</b>PriceToHPRate</span><span style="color:#fff;font-weight:bold;">)</span><span style="color:#fff;font-weight:bold;">;</span>
+<span style="color:#fff;font-weight:bold;">}</span></pre>
+<p>Позволяет получать информацию об имеющихся прототипах. Объект доступен только в расширенной подписке.</p>
+<p><strong>Методы:</strong></p>
+<blockquote>
+<p><strong class="class_descr">getPrototypes</strong> – возвращает все доступные вам в данный момент к постройке
+прототипы а так же все имеющиеся у вас на вооружении прототипы как массив, состоящий из объектов типа <strong>Prototype</strong>.
+Помимо прочего, возвращает доступные вам стандартные здания и юниты (шахта, наместник, etc.) с ID меньше 1000.</p>
+</blockquote>
+<h2><a name="Prototype"/>Prototype</h2>
+<p>Объект, выдающий информацию по одному из доступных вам типов юнитов.</p>
+<p><strong>Методы:</strong></p>
+<blockquote>
+<p><strong class="class_descr">getProp($propName)</strong> – возвращает одно из свойств прототипа.</p>
+<blockquote style="font-size: 90%;">
+<p><strong class="class_descr">building_id</strong> – ID прототипа.</p>
+<p><strong class="class_descr">cost_main</strong>, <strong class="class_descr">cost_second</strong>,
+<strong class="class_descr">cost_money</strong>, <strong class="class_descr">cost_pepl</strong> – цена
+постройки юнита – основной ресурс, вторичный, кредиты и вычитаемое с планеты после постройки население.</p>
+<p><strong class="class_descr">support_main</strong>, <strong class="class_descr">support_second</strong> – стоимость
+	поддержки юнита по этому прототипу.</p>
+<p><strong class="class_descr">requires_pepl</strong> – требуемое для поддержки население (актуально для зданий).</p>
+<p><strong class="class_descr">stealth_price</strong>, <strong class="class_descr">stealth_support</strong> -
+	стоимость активации и поддержки невидимости для этого юнита.</p>
+<p><strong class="class_descr">hit_points</strong> – очки жизни.</p>
+<p><strong class="class_descr">bonus_o</strong>, <strong class="class_descr">bonus_e</strong>,
+<strong class="class_descr">bonus_m</strong>, <strong class="class_descr">bonus_production</strong>
+ – влияние постройки на производительность планеты (органика, энергия, минералы, скорость строительства).</p>
+<p><strong class="class_descr">stealth_lvl</strong> – качество систем невидимости.</p>
+<p><strong class="class_descr">scan_strength</strong> – качество систем поиска невидимок.</p>
+<p><strong class="class_descr">detect_range</strong> – радиус сканирования гиперпространства.</p>
+<p><strong class="class_descr">build_speed</strong> – время постройки (в человеко-часах).</p>
+<p><strong class="class_descr">laser_damage</strong>, <strong class="class_descr">laser_number</strong>,
+	<strong class="class_descr">bomb_damage</strong>, <strong class="class_descr">bomb_number</strong> -
+	повреждение одним орудием и число орудий – лазеров и ракет.</p>
+<p><strong class="class_descr">is_building</strong> – 1 для зданий.</p>
+<p><strong class="class_descr">is_ground_unit</strong> – участвует в наземных сражениях.</p>
+<p><strong class="class_descr">is_space_ship</strong> – участвует в орбитальных сражениях.</p>
+<p><strong class="class_descr">is_transportable</strong> – юнит можно перевозить (1 – в ангарах для
+	истребителей, 2 – в транспортных отсеках).</p>
+<p><strong class="class_descr">fly_range</strong> – радиус гиперпрыжка.</p>
+<p><strong class="class_descr">fly_speed</strong> – скорость гиперпрыжка.</p>
+<p><strong class="class_descr">maxcount</strong> – максимальное число таких зданий на планету.</p>
+<p><strong class="class_descr">weight</strong> – вес юнита.</p>
+<p><strong class="class_descr">class</strong> – тип юнита. 1 Boat, 3 Destroyer, 4 Battle-cruiser, 5 Carrier, 6 Transport,
+  7 Civil (Colony, Probe, Building), 8 infantry, 9 Mech.</p>
+<p><strong class="class_descr">offensive</strong> – это атакующий юнит.</p>
+<p><strong class="class_descr">laser_targets</strong>, <strong class="class_descr">bomb_targets</strong> -
+	список приоритетных целей в виде строки. '31' будет означать, что юнит сперва целится в корветы (Destroyer),
+	потом в катера (Boat).</p>
+<p><strong class="class_descr">laser_dr</strong>, <strong class="class_descr">bomb_dr</strong> – качество
+	противолазерных и противоракетных защитных систем юнита.</p>
+<p><strong class="class_descr">laser_ar</strong>, <strong class="class_descr">build</strong> – качество
+	систем наведения лазеров и ракет.</p>
+<p><strong class="class_descr">levelable</strong> – юнит может накачиваться.</p>
+<p><strong class="class_descr">s_name</strong> – название (заполнено только у пользовательских прототипов,
+	стандартные прототипы, выдаваемые в начале игры, и стандартные игровые здания имеют s_name undef).</p>
+<p><strong class="class_descr">s_description</strong> – описание (заполнено только у пользовательских прототипов,
+	стандартные прототипы, выдаваемые в начале игры, и стандартные игровые здания имеют s_description undef).</p>
+<p><strong class="class_descr">carapace</strong> – тип шасси, на основе которого собран прототип. undef для
+	не-сборных юнитов типа наместника и зданий.</p>
+<p><strong class="class_descr">color</strong> – цвет прототипа.</p>
+<p><strong class="class_descr">buildingactions</strong> – список допустимых для данного юнита спецзаданий
+ (геологоразведка, зачистка....) в виде строки, в которой id заданий разделены запятыми. Например '1' или '1,101,103'.</p>
+<p><strong class="class_descr">archived</strong> – показывает, актуален ли прототип, или уже находится в архиве.</p>
+<p><strong class="class_descr">carrier_capacity</strong> – число взлетных палуб для истребителей.</p>
+<p><strong class="class_descr">transport_capacity</strong> – число транспортных ячеек.</p>
+</blockquote>
+</blockquote>
+</body>
+</html>

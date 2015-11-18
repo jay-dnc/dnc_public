@@ -1,0 +1,20 @@
+### HTML
+*.html
+
+### old versions
+*.save
+*.save.?
+*.tmp
+*.bak
+
+### arcives ###
+*.gz
+*.zip
+*.rar
+
+### pictures
+*.gif
+*.png
+*.jpg
+*.ico
+

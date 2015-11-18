@@ -1,0 +1,85 @@
+<html>
+	<title>Making war</title>
+<body>
+<h2>Overview</h2>
+<p>All you really need to know is this:</p>
+<ul>
+	<li>The more units you have the better</li>
+	<li>The higher level your units have the better</li>
+	<li>Units fire in predefined order, and depending on whether you are attacking or
+		defending, order will start from light attackers or light defenders
+		and end with heaviest defenders or attackers respectively.</li>
+	<li>Mixed forces are often most effective.</li>
+	<li>Battle may continue several turns. If you are losing a battle, run before
+		it is too late.</li>
+</ul>
+<p>Following text covers most of battle calculation details. While this
+details are quite important, you can still skip this boring treatise and
+return here after you have played D&amp;C at least a week.</p>
+<h2>Unit types. Unit properties.</h2>
+<p>All battles can have two stages: space battle, if it is requested
+and there is an enemy, and surface, if invasion was requested. This means
+some units (like Shuttle) will fight twice  first in the space and then
+on surface. All battles are calculated identically, no matter in space
+or at a surface.</p>
+<p>All units may have two kind of weapons  rockets or lasers.
+They also have two independent defense systems  from rockets
+and from lasers. Level 5 laser will hit unit with level 5 antilaser defense
+with about 60% chance. Level 20 laser will hit level 5 defense with
+about 100% chance, as well as 5-to-20 shot will have close to zero chance to hit.</p>
+<p>In addition to attack rating all weapons have damage level. Rockets have
+higher damage, but it is really hard to hit some units (like infantry or a fighter)
+with them because of a good antirocket defense. If your technology allows you,
+you can destroy enemy fighters with single shot, but if your enemy has close to
+yours tech level, some units will be invulnerable for your rockets.</p>
+<p>Every unit also has those "hitpoints", and when unit's hitpoints are equal
+to zero this unit is equated to zero as well. If you have a carrier with 1%
+hitpoints left, it is time to move it to one of your worlds, where damaged unit will
+be automatically repaired.</p>
+<p>Depending on the race you have chosen, your units can be stronger or weaker
+from the start. Next important thing is "level". If you have high technology level,
+all the units you create will be stronger then the base prototype.<!-- After the
+battles, survivor's level will slowly grow too.--></p>
+<p>From level to level unit's stats grow dramatically and two-level
+gap between you and your opponent could mean he has a double
+force with the same unit count and weight.</p>
+
+<h2>Battles</h2>
+<p>All fleet moves end <strong>BEFORE</strong> the battles are
+calculated. All planet's production and support costs are calculated <strong>AFTER</strong>
+ the battles are calculated. Battle starts when one fleet attacks another. Enemy's fleets can
+remain in one system forever and never fight if they do not get an order to attack.</p>
+<p>Once you are involved in the battle, <strong>ALL</strong> your fleets in the
+system will fight. You will fight if you are attacking, if you were attacked or
+if one of your fleets has an order to help an ally attacked or attacking. Ally relations are not
+inherited, so you will not fight, if your ally will fight to help his ally.</p>
+<p>If you are not attacking and you are not attacked and you have no
+intent to help an ally, you are not involved in battle. If you allies fight with
+each other, you are not fighting at all too.</p>
+<p>After all fleets were moved, every fleet checks, if there are a targets it must attack
+nearby. If there are  it does attack and it's fighting in attack order. Suppose you
+have assembled a "Mad" fleet, order it to attack all vassals and moved it to
+some vassal's planet. Fleet will arrive and attack all the vassal fleets it will
+find. Your "Mad" fleet will go in attack order, while your vassals fleets will
+be in defense order, even if they will expect you and order to attack a lord  arriving
+fleet has a preference in attack.</p>
+<p>Now when base order is defined for both players, units start firing at each other
+one-by-one (or one-by-two, depending on the number of units you have). First go
+light units, then heavy. Your bombers will crack vassals carriers, while
+vassal's fighters will start to hunt for your bombers, and at the end of the
+battle-turn your heavy ships will fire too.</p>
+<p>Every unit has his own list of targets, like bombers will first attack
+heavy jumpships while fighters will attack bombers. You can manually
+define a "Mission" for one of your fleets, like "Destroy carriers", and
+that fleet will do as you ask, all units will target selected unit class.</p>
+<p>Inside of the target class, the target is chosen randomly.</p>
+<p>This whole order thing will happen several times (currently, 5) and then stop.
+Keep in mind, that your bombers will launch all rockets and can became a low-end
+fighter after two battle-turns. Then all your transports and carriers are checked
+to find units without a transport. All homeless units are killed, others will
+be resorted among free space in your fleets, if needed. If you are fighting
+on your own planet, all "lost units" are simply moved to garrison.</p>
+
+
+</body>
+</html>
