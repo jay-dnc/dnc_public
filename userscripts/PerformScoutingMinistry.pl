@@ -1,6 +1,8 @@
 # PerformScoutingMinistry v 1.14 script, by GribUser & Aragaer
 # 25.06.2006
 # Based on Наукоград/IQ script "Штаб разведки NG02.02.17 (c) Наукоград"
+# + патч для звезд и пустот от JlblC
+# можно в ручном режиме выпрыгнуть при зависании там см. строку 223
 
 # ========== RUS ===============================================================
 # Умный скрипт, позволяющий автоматизировать разведку ресурсов в секторе.
@@ -218,6 +220,7 @@ foreach my $Fleet($Empire->fleets()->getFleetsByName($FleetPrefix.'%')){
       }else{
          LogWARN("Error researching $x:$y with ".$Fleet->getProp('name').' '.
             $Fleet->getProp('id').' (not enough resources?)');
+           # $Explored=1; # раскомментируем эту строчку и производим один тестовый запуск для выпрыгивания с пустот
       }
    }
    if($Explored){
@@ -242,8 +245,9 @@ my @toReasearch;
 my $minSizeType=$MinSizeExplore/10;
 planet:
 for my $Planet ($Empire->planets->getRectangle($left, $top, $right, $bottom)) {
-	my ($x, $y) = map $Planet->getProp($_), qw(x y);
+	my ($x, $y,$image) = map $Planet->getProp($_), qw(x y image);
 	next if $radius && sqrt(($xCenter-$x)*($xCenter-$x)+($yCenter-$y)*($yCenter-$y))>$radius;
+        next if (($image>=81 and $image<=86) or ($image>=91 and $image<=96));
 	if ($Planet->getProp('jumpable')){
 		push @JumpablePlanets, "$x:$y";
 		next
