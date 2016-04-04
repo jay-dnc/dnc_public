@@ -1,0 +1,88 @@
+body{
+	font-family : "Times New Roman", Times, serif;
+	font-size : 11pt;
+}
+h1{
+	padding : 0;
+	margin : 0;
+	font-family : arial, Helvetica, sans-serif;
+	font-size : 18pt;
+}
+#logo{
+	border-bottom : 1px solid white;
+	margin-bottom: 0.8em;
+}
+#menu,#rueng{
+	display : none;
+}
+#body{
+}
+a{
+	color : black;
+	font-style : italic;
+	text-decoration: underline;
+}
+#top_logo{
+	border : 8px solid black;
+}
+div.menugroup{
+	padding-left : 20px;
+	font-size : 110%;
+}
+div.menuitem{
+	margin :0.2em  0 0 0.5em;
+}
+div.menusubitem{
+	margin :0.2em  0 0 1.5em;
+	font-size : 95%;
+}
+strong.menu_selected{
+	color: white;
+	font-weight : normal;
+}
+strong.menugroup{
+	font-size : 110%;
+}
+h2{
+	font-size : 16pt;
+	font-family : arial, Helvetica, sans-serif;
+}
+p{
+	margin : 0 0 0.5em 0;
+	text-align : justify;
+}
+a:hover{
+}
+td,th{
+	font-size : 80%;
+}
+code{
+	font-family : "Courier New", Courier, monospace;
+	font-size : 100%;
+	background-color : #323232;
+}
+span.c{
+	color: yellow;
+}
+
+span.o{
+	color: Lime;
+}
+
+span.e{
+	color: Aqua;
+}
+
+span.m{
+	color: Red;
+}
+span.s{
+	color: blue;
+}
+span.p{
+	color: Fuchsia;
+}
+pre{
+	font-family : "lucida Console","Courier New", Courier, monospace;
+	font-size : 100%;
+}
